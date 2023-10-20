@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import Number from '../../../Components/Number.js'
 
-export default function ShopButton({label, statName, priceName, game}) {
+export default function ShopButton({label, statName, priceName, game, setGold}) {
 
 
   const [price, setPrice] = useState(game.gameData.costs[priceName]);
@@ -9,6 +9,7 @@ export default function ShopButton({label, statName, priceName, game}) {
   const shopFunction = () => {
     game.purchaseUpgrade(statName, priceName)
     setPrice(game.gameData.costs[priceName]);
+    setGold(game.gameData.currency.gold)
   }
 
   return (

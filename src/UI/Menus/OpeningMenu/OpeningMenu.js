@@ -83,12 +83,14 @@ export default function OpeningMenu({game}) {
             label='Upgrade Poke'
             statName='pokePower'
             priceName='pokeUpgrade'
+            setGold={setGold}
             game={game}
           />
           <ShopButton
             label='Upgrade Attack'
             statName='atkPower'
             priceName='atkUpgrade'
+            setGold={setGold}
             game={game}
           />
           <p>Your HP: <Number value={playerHp} /></p>
