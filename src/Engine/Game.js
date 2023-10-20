@@ -70,9 +70,9 @@ export default class Game {
       this.upgradeStat(statName, 1)
       this.gameData.currency.gold =
       this.gameData.currency.gold.subtract(price);
+      this.gameData.costs[priceName] =
+      this.gameData.costs[priceName].times(1.5);
     }
-    this.gameData.costs[priceName] =
-    this.gameData.costs[priceName].times(1.5);
   }
 
   awakenBeast() {
