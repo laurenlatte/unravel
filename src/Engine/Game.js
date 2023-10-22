@@ -10,6 +10,7 @@ const DEFAULT_GAME_DATA = {
   },
   attributes: {
     arousal: numbers.createDecimal(0),
+    energy: numbers.createDecimal(100),
   }
 };
 
@@ -27,6 +28,20 @@ export default class Game {
   subtractResource(resourceName, value) {
     this.gameData.resources[resourceName] =
     this.gameData.resources[resourceName].subtract(value)
+  }
+
+  addAttribute(attributeName, value) {
+    this.gameData.attributes[attributeName] =
+    this.gameData.attributes[attributeName].add(value)
+  }
+
+  subtractAttribute(attributeName, value) {
+    this.gameData.attributes[attributeName] =
+    this.gameData.attributes[attributeName].subtract(value)
+  }
+
+  setAttribute(attributeName, value) {
+    this.gameData.attributes[attributeName] = numbers.createDecimal(value);
   }
 
 }

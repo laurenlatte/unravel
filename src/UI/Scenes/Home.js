@@ -6,7 +6,10 @@ export default function Home({game, setScene}) {
     {style: 'default', content: 'You are in a small clearing which you call home.'}
   ]
   const defaultActions = [
-    {label: 'Enter Forest', onClick: ()=>{setScene('forest')}}
+    {label: 'Enter Forest', onClick: ()=>{setScene('forest')}},
+    {label: 'Sleep', onClick: ()=>{
+      game.setAttribute('energy', 100)
+    }}
   ]
 
   return (
