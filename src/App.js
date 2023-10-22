@@ -1,14 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
-import OpeningMenu from './UI/Menus/OpeningMenu/OpeningMenu.js';
+import {useState} from 'react';
+import Home from './UI/Scenes/Home.js';
+import Forest from './UI/Scenes/Forest.js';
 import Game from './Engine/Game.js';
 
 function App() {
   const game = new Game();
+
+  const [scene, setScene] = useState('home');
+
+  const scenes = {
+    'home': <Home game={game} setScene={setScene} />,
+    'forest': <Forest game={game} setScene={setScene} />
+  }
+
   return (
     <div className="App">
       <div className="App-header">
-        <OpeningMenu game={game}/>
+        {scenes[scene]}
       </div>
     </div>
   );
