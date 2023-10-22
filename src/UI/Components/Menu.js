@@ -8,6 +8,9 @@ function StatDisplay({game}) {
   const [copper, setCopper] = useState(game.gameData.resources.copper);
   const [arousal, setArousal] = useState(game.gameData.attributes.arousal);
   const [energy, setEnergy] = useState(game.gameData.attributes.energy);
+  const [minute, setMinute] = useState(game.gameData.time.minute);
+  const [hour, setHour] = useState(game.gameData.time.hour);
+  const [day, setDay] = useState(game.gameData.time.day);
 
   useEffect(()=>{
     const updateCheck = setInterval(()=>{
@@ -16,7 +19,9 @@ function StatDisplay({game}) {
       setCopper(game.gameData.resources.copper);
       setArousal(game.gameData.attributes.arousal);
       setEnergy(game.gameData.attributes.energy);
-      console.log('updating resources');
+      setMinute(game.gameData.time.minute)
+      setHour(game.gameData.time.hour)
+      setDay(game.gameData.time.day)
     }, 100)
     return () => {
       clearInterval(updateCheck)
@@ -25,6 +30,11 @@ function StatDisplay({game}) {
 
   return (
     <>
+      <div style={{display: 'inline-block'}}>
+        <DefaultText>Day: {day}</DefaultText>
+        <DefaultText>Time: {hour}:{minute == 0 ? "00" : minute}</DefaultText>
+      </div>
+      <hr style={{color: 'white'}} />
       <DefaultText>Resources</DefaultText>
       <hr style={{color:'white'}} />
       <DefaultText>Wood: <Number value={wood} /></DefaultText>

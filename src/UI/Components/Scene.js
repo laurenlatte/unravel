@@ -1,8 +1,11 @@
 import {useState} from 'react';
 import Header from './Header.js';
 import Actions from './Actions.js';
+import * as TextStyles from './TextStyles.js';
 
-export default function Scene({game, headers, actions}) {
+export default function Scene({game, descriptor, headers, actions, addHeader}) {
+
+
 
   return (
     <div style={{
@@ -16,8 +19,9 @@ export default function Scene({game, headers, actions}) {
       overflowX: 'hidden',
       paddingTop: '20px',
     }}>
+      <TextStyles.DescriptorText>{descriptor}</TextStyles.DescriptorText>
       <Header headers={headers} />
-      <Actions buttonDefinitions={actions} />
+      <Actions buttonDefinitions={actions} game={game} addHeader={addHeader} />
     </div>
   )
 }

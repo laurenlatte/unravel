@@ -16,8 +16,20 @@ export function WarmthText({children}) {
   )
 }
 
+export function ErrorText({children}) {
+  return (
+    <p style={{...styleDefaults, color: 'red'}}>{children}</p>
+  )
+}
+
 export function DefaultText({children}) {
   return (
     <p style={{...styleDefaults}}>{children}</p>
+  )
+}
+
+export function DescriptorText({children}) {
+  return (
+    <p style={{...styleDefaults, fontSize: '15px'}}>{children}</p>
   )
 }

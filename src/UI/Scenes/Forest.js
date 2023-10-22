@@ -1,26 +1,46 @@
+import {useEffect, useState} from 'react';
 import Scene from '../Components/Scene.js';
-import Menu from '../Components/Menu.js'
 
 export default function Forest({game, setScene}) {
   const defaultHeaders = [
-    {style: 'default', content: 'You are in the dense forests near your home. Animals scurry about and the sound of birdsong fills the air.'}
   ]
   const defaultActions = [
-    {label: 'Go Home', onClick: ()=>{setScene('home')}},
-    {label: 'Chop Wood', onClick: ()=>{
-      if(game.gameData.attributes.energy.greaterThanOrEqualTo(5)) {
+    {
+      label: 'Go Home',
+      onClick: ()=>{setScene('home')},
+      timeSpent: 20,
+      energySpent: 5,
+      unlocked: true
+    },
+    {
+      label: 'Gather Wood',
+      onClick: ()=>{
         game.addResource('wood', 1);
-        game.subtractAttribute('energy', 5);
-      }
-    }}
+        addHeader({
+          style: 'default',
+          show: true,
+          content: 'You labor in the forest to find one log of wood.'
+        })
+      },
+      timeSpent:60,
+      energySpent:15,
+      unlocked: true
+    },
   ]
 
+  const [headers, setHeaders] = useState(defaultHeaders);
+  const [actions, setActions] = useState(defaultActions);
+  const addHeader = (newHeader) => {
+    setHeaders([...headers, newHeader]);
+  }
   return (
     <>
-    <Menu game={game} />
     <Scene
-      headers={defaultHeaders}
-      actions={defaultActions}
+      descriptor={"You are in the dense forests near your home. Animals scurry about and the sound of birdsong fills the air."}
+      game={game}
+      addHeader={addHeader}
+      headers={headers}
+      actions={actions}
     />
     </>
   )
