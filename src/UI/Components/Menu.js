@@ -2,17 +2,20 @@ import {useState, useEffect} from 'react';
 import {DefaultText} from './TextStyles.js';
 import Number from './Number.js'
 
-function ResourceDisplay({game}) {
-  const [resources, setResources] = useState(game.gameData.resources)
+function StatDisplay({game}) {
   const [wood, setWood] = useState(game.gameData.resources.wood);
   const [stone, setStone] = useState(game.gameData.resources.stone);
   const [copper, setCopper] = useState(game.gameData.resources.copper);
+  const [arousal, setArousal] = useState(game.gameData.attributes.arousal);
+  const [energy, setEnergy] = useState(game.gameData.attributes.energy);
 
   useEffect(()=>{
     const updateCheck = setInterval(()=>{
       setWood(game.gameData.resources.wood);
       setStone(game.gameData.resources.stone);
       setCopper(game.gameData.resources.copper);
+      setArousal(game.gameData.attributes.arousal);
+      setEnergy(game.gameData.attributes.energy);
       console.log('updating resources');
     }, 100)
     return () => {
@@ -22,9 +25,16 @@ function ResourceDisplay({game}) {
 
   return (
     <>
-      <DefaultText>Wood: <Number value={resources.wood} /></DefaultText>
-      <DefaultText>Stone: <Number value={resources.stone} /></DefaultText>
-      <DefaultText>Copper: <Number value={resources.copper} /></DefaultText>
+      <DefaultText>Resources</DefaultText>
+      <hr style={{color:'white'}} />
+      <DefaultText>Wood: <Number value={wood} /></DefaultText>
+      <DefaultText>Stone: <Number value={stone} /></DefaultText>
+      <DefaultText>Copper: <Number value={copper} /></DefaultText>
+      <hr style={{color:'white'}} />
+      <DefaultText> Attributes </DefaultText>
+      <hr style={{color: 'white'}} />
+      <DefaultText>Arousal: <Number value={arousal} /></DefaultText>
+      <DefaultText>Energy: <Number value={energy} /></DefaultText>
     </>
   )
 }
@@ -42,9 +52,8 @@ export default function Menu({game}) {
       overflowX: 'hidden',
       paddingTop: '20px',
     }}>
-      <p style={{fontSize: '12px'}}>Resources</p>
       <hr style={{color:'white'}} />
-      <ResourceDisplay game={game} />
+      <StatDisplay game={game} />
     </div>
   )
 }
