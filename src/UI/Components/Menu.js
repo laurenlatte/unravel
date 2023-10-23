@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import {DefaultText} from './TextStyles.js';
 import Number from './Number.js'
 
-function StatDisplay({game, setScene}) {
+function StatDisplay({game, setScene, scene}) {
   const [wood, setWood] = useState(game.gameData.resources.wood);
   const [stone, setStone] = useState(game.gameData.resources.stone);
   const [copper, setCopper] = useState(game.gameData.resources.copper);
@@ -11,7 +11,6 @@ function StatDisplay({game, setScene}) {
   const [minute, setMinute] = useState(game.gameData.time.minute);
   const [hour, setHour] = useState(game.gameData.time.hour);
   const [day, setDay] = useState(game.gameData.time.day);
-
   useEffect(()=>{
     const updateCheck = setInterval(()=>{
       setWood(game.gameData.resources.wood);
@@ -22,8 +21,10 @@ function StatDisplay({game, setScene}) {
       setMinute(game.gameData.time.minute)
       setHour(game.gameData.time.hour)
       setDay(game.gameData.time.day)
-      if(game.gameData.attributes.energy.lessThanOrEqualTo(0)){
+      if(game.gameData.attributes.energy.lessThanOrEqualTo(0) && scene != 'encounter' && scene != 'intercourse' && scene != 'passOutFucked'){
         setScene('passOut');
+      } else if(game.gameData.attributes.energy.lessThanOrEqualTo(0)) {
+        setScene('passOutFucked');
       }
     }, 100)
     return () => {
@@ -52,7 +53,7 @@ function StatDisplay({game, setScene}) {
   )
 }
 
-export default function Menu({game, setScene}) {
+export default function Menu({game, setScene, scene}) {
   return (
     <div style={{
       height: '100%',
@@ -66,7 +67,7 @@ export default function Menu({game, setScene}) {
       paddingTop: '20px',
     }}>
       <hr style={{color:'white'}} />
-      <StatDisplay game={game} setScene={setScene} />
+      <StatDisplay game={game} scene={scene} setScene={setScene} />
     </div>
   )
 }

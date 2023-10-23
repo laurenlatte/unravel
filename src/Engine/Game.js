@@ -19,6 +19,7 @@ const DEFAULT_GAME_DATA = {
   attributes: {
     arousal: numbers.createDecimal(0),
     energy: numbers.createDecimal(100),
+    health: numbers.createDecimal(100),
   },
   home: {
     shelterLevel: numbers.createDecimal(0),
@@ -156,6 +157,21 @@ export default class Game {
     const monster = this.spawnMonster(location);
     this.gameData.encounters.activeEncounters.monsters =
     [...this.gameData.encounters.activeEncounters.monsters, monster];
+  }
+
+  damagePlayer(amount) {
+    this.gameData.attributes.health =
+    this.gameData.attributes.health.subtract(amount);
+  }
+
+  arousePlayer(amount) {
+    this.gameData.attributes.arousal =
+    this.gameData.attributes.arousal.add(amount);
+  }
+
+  arouseMonster(amount) {
+    this.gameData.encounters.activeEncounters.monsters[0].arousal =
+    this.gameData.encounters.activeEncounters.monsters[0].arousal.add(amount);
   }
 
 }

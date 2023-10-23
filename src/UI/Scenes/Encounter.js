@@ -13,7 +13,18 @@ export default function Encounter({game, setScene}) {
   ]
   const defaultActions = [
     {
-      label: 'Go Home',
+      label: 'Present your ass',
+      onClick: ()=>{
+        game.arousePlayer(10);
+        setScene('intercourse');
+      },
+      timeSpent: 5,
+      energySpent: 0,
+      unlocked: true,
+      encounterChance: 0
+    },
+    {
+      label: 'Run',
       onClick: ()=>{setScene('home')},
       timeSpent: 20,
       energySpent: 5,
