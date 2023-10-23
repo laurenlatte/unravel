@@ -29,13 +29,13 @@ const DEFAULT_GAME_DATA = {
     shelters: {
       0: {
         description: 'A rugged bedding of leaves lays on the ground.',
-        energyRestore: '10',
-        maxEnergy: '50'
+        energyRestore: '50',
+        maxEnergy: '100'
       },
       1: {
         description: 'A ramshackle collection of sticks tied with twine roofs a small bedding of leaves on the ground.',
-        energyRestore: '25',
-        maxEnergy: '75',
+        energyRestore: '100',
+        maxEnergy: '200',
       }
     }
   },
@@ -120,6 +120,21 @@ export default class Game {
       this.gameData.time.hour = newHours;
     }
     this.gameData.time.minute = newMinutes;
+  }
+
+  restCharacter() {
+    const energyRestored =
+    this.gameData.home.shelters[this.gameData.home.shelterLevel].energyRestore;
+    const maxEnergy =
+    this.gameData.home.shelters[this.gameData.home.shelterLevel].maxEnergy;
+    const currentEnergy =
+    this.gameData.attributes.energy;
+    let newEnergy = currentEnergy.add(energyRestored);
+    if(newEnergy.greaterThanOrEqualTo(maxEnergy)) {
+      this.setAttribute('energy', maxEnergy);
+    } else {
+      this.setAttribute('energy', newEnergy);
+    }
   }
 
 }

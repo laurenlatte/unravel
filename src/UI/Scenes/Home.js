@@ -17,7 +17,7 @@ export default function Home({game, setScene}) {
     {
       label: 'Sleep',
       onClick: ()=>{
-        game.setAttribute('energy', 100)
+        game.restCharacter()
       },
       timeSpent: 480,
       energySpent: 0,
