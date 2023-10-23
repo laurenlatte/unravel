@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import Scene from '../Components/Scene.js';
+import Scene from '../../Components/Scene.js';
 
 export default function Home({game, setScene}) {
 

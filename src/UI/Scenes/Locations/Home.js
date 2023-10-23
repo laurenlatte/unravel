@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import Scene from '../Components/Scene.js';
+import Scene from '../../Components/Scene.js';
 
 export default function Home({game, setScene}) {
 
@@ -9,10 +9,12 @@ export default function Home({game, setScene}) {
   const defaultActions = [
     {
       label: 'Enter Forest',
-      onClick: ()=>{setScene('forest')},
+      onClick: ()=>{setScene('forest');},
       timeSpent: 20,
       energySpent: 5,
-      unlocked: true
+      unlocked: true,
+      encounterChance: 0,
+      location: 'forest',
     },
     {
       label: 'Sleep',
@@ -21,7 +23,9 @@ export default function Home({game, setScene}) {
       },
       timeSpent: 480,
       energySpent: 0,
-      unlocked: true
+      unlocked: true,
+      encounterChance: 0.3,
+      location: 'forest',
     },
     {
       label: 'Upgrade Shelter',
@@ -71,6 +75,7 @@ export default function Home({game, setScene}) {
       addHeader={addHeader}
       headers={headers}
       actions={actions}
+      setScene={setScene}
     />
     </>
   )

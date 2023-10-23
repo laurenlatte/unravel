@@ -3,7 +3,7 @@ import Header from './Header.js';
 import Actions from './Actions.js';
 import * as TextStyles from './TextStyles.js';
 
-export default function Scene({game, descriptor, headers, actions, addHeader}) {
+export default function Scene({game, descriptor, headers, actions, addHeader, setScene}) {
 
 
 
@@ -21,7 +21,7 @@ export default function Scene({game, descriptor, headers, actions, addHeader}) {
     }}>
       <TextStyles.DescriptorText>{descriptor}</TextStyles.DescriptorText>
       <Header headers={headers} />
-      <Actions buttonDefinitions={actions} game={game} addHeader={addHeader} />
+      <Actions setScene={setScene} buttonDefinitions={actions} game={game} addHeader={addHeader} />
     </div>
   )
 }

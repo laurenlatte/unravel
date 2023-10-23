@@ -1,4 +1,5 @@
 import IncreMath from '../Utils/IncreMath.js';
+import Wolf from './Monsters/Wolf';
 
 const numbers = new IncreMath();
 
@@ -37,6 +38,14 @@ const DEFAULT_GAME_DATA = {
         energyRestore: '100',
         maxEnergy: '200',
       }
+    }
+  },
+  encounters: {
+    forest: {
+      monsters: [Wolf]
+    },
+    activeEncounters: {
+      monsters: [],
     }
   },
   progression: {
@@ -135,6 +144,18 @@ export default class Game {
     } else {
       this.setAttribute('energy', newEnergy);
     }
+  }
+
+  spawnMonster(location) {
+    const monsters = this.gameData.encounters[location].monsters
+    const monster = new monsters[0](this, );
+    return monster
+  }
+
+  doEncounter(location) {
+    const monster = this.spawnMonster(location);
+    this.gameData.encounters.activeEncounters.monsters =
+    [...this.gameData.encounters.activeEncounters.monsters, monster];
   }
 
 }

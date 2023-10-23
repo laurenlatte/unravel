@@ -1,6 +1,6 @@
 import Action from './Action.js';
 
-export default function Actions({buttonDefinitions, game, addHeader}) {
+export default function Actions({buttonDefinitions, game, addHeader, setScene}) {
   return (
     <div style={{width: '100%', textAlign: 'left', marginLeft: '20%', marginTop: '5%', userSelect: 'none'}}>
     {buttonDefinitions.map(
@@ -13,6 +13,9 @@ export default function Actions({buttonDefinitions, game, addHeader}) {
                     onClick={buttonDef.onClick}
                     unlocked={buttonDef.unlocked}
                     addHeader={addHeader}
+                    encounterChance={buttonDef.encounterChance}
+                    location={buttonDef.location}
+                    setScene={setScene}
                   />
                   <br />
                   </>

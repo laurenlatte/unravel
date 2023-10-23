@@ -1,15 +1,29 @@
 import Button from './Button.js'
 import * as TextStyles from './TextStyles.js';
+import IncreMath from '../../Utils/IncreMath.js';
 
-export default function Action({game, label, timeSpent, energySpent, onClick, unlocked, addHeader}) {
+const numbers = new IncreMath();
+
+export default function Action({
+    game,
+    label,
+    timeSpent,
+    energySpent,
+    onClick,
+    unlocked,
+    addHeader,
+    encounterChance,
+    location,
+    setScene
+  }) {
   const handleClick = () => {
-    if(game.hasEnergy(energySpent)) {
-      game.addTime(timeSpent);
-      game.subtractAttribute('energy', energySpent);
-      onClick();
-    } else {
-      addHeader({style: 'error', content: "You don't have enough energy for that.", show:true})
+    if(numbers.getRandomChance(encounterChance) == true) {
+      game.doEncounter(location);
+      setScene('encounter');
     }
+    game.addTime(timeSpent);
+    game.subtractAttribute('energy', energySpent);
+    onClick();
   }
 
   return (

@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import Scene from '../Components/Scene.js';
+import Scene from '../../Components/Scene.js';
 
 export default function Forest({game, setScene}) {
   const defaultHeaders = [
@@ -24,7 +24,9 @@ export default function Forest({game, setScene}) {
       },
       timeSpent:60,
       energySpent:15,
-      unlocked: true
+      unlocked: true,
+      encounterChance: 0.3,
+      location: 'forest',
     },
   ]
 
@@ -41,6 +43,7 @@ export default function Forest({game, setScene}) {
       addHeader={addHeader}
       headers={headers}
       actions={actions}
+      setScene={setScene}
     />
     </>
   )
