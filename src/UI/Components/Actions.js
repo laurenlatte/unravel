@@ -2,10 +2,10 @@ import Action from './Action.js';
 
 export default function Actions({buttonDefinitions, game, addHeader}) {
   return (
-    <div>
+    <div style={{width: '100%', textAlign: 'left', marginLeft: '20%', marginTop: '5%', userSelect: 'none'}}>
     {buttonDefinitions.map(
       (buttonDef) => {
-          return <Action
+          return <><Action
                     game={game}
                     label={buttonDef.label}
                     timeSpent={buttonDef.timeSpent}
@@ -14,6 +14,8 @@ export default function Actions({buttonDefinitions, game, addHeader}) {
                     unlocked={buttonDef.unlocked}
                     addHeader={addHeader}
                   />
+                  <br />
+                  </>
         }
     )}
     </div>

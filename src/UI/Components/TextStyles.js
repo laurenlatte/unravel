@@ -33,3 +33,9 @@ export function DescriptorText({children}) {
     <p style={{...styleDefaults, fontSize: '15px'}}>{children}</p>
   )
 }
+
+export function LinkText({children, onClick}) {
+  return (
+    <a onClick={onClick}style={{...styleDefaults, color: 'blue', userSelect: 'none'}}>{children}</a>
+  )
+}

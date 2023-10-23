@@ -4,6 +4,7 @@ import {useState} from 'react';
 import Menu from './UI/Components/Menu.js';
 import Home from './UI/Scenes/Home.js';
 import Forest from './UI/Scenes/Forest.js';
+import PassOut from './UI/Scenes/PassOut.js';
 import Game from './Engine/Game.js';
 
 function App() {
@@ -13,13 +14,14 @@ function App() {
 
   const scenes = {
     'home': <Home game={game} setScene={setScene} />,
-    'forest': <Forest game={game} setScene={setScene} />
+    'forest': <Forest game={game} setScene={setScene} />,
+    'passOut': <PassOut game={game} setScene={setScene} />
   }
 
   return (
     <div className="App">
       <div className="App-header">
-        <Menu game={game} />
+        <Menu game={game} setScene={setScene} />
         {scenes[scene]}
       </div>
     </div>

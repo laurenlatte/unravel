@@ -19,8 +19,13 @@ const DEFAULT_GAME_DATA = {
     arousal: numbers.createDecimal(0),
     energy: numbers.createDecimal(100),
   },
-  clearingHome: {
+  home: {
     shelterLevel: numbers.createDecimal(0),
+    upgradeCost: {
+      wood: 10,
+      stone: 0,
+      copper: 0,
+    },
     shelters: {
       0: {
         description: 'A rugged bedding of leaves lays on the ground.',
@@ -71,6 +76,35 @@ export default class Game {
 
   hasEnergy(energySpent) {
     return this.gameData.attributes.energy.greaterThanOrEqualTo(energySpent);
+  }
+
+  checkCanAffordShelter() {
+    if(
+      this.gameData.resources.wood.greaterThanOrEqualTo(this.gameData.home.upgradeCost.wood) &&
+      this.gameData.resources.stone.greaterThanOrEqualTo(this.gameData.home.upgradeCost.stone) &&
+      this.gameData.resources.copper.greaterThanOrEqualTo(this.gameData.home.upgradeCost.copper)
+    ) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  upgradeShelter() {
+    this.gameData.home.shelterLevel =
+    this.gameData.home.shelterLevel.add(1);
+    this.gameData.resources.wood =
+    this.gameData.resources.wood.subtract(
+      this.gameData.home.upgradeCost.wood
+    )
+    this.gameData.resources.stone =
+    this.gameData.resources.stone.subtract(
+      this.gameData.home.upgradeCost.stone
+    )
+    this.gameData.resources.copper =
+    this.gameData.resources.copper.subtract(
+      this.gameData.home.upgradeCost.copper
+    )
   }
 
   addTime(minutes) {

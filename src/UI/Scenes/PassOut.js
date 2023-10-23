@@ -8,40 +8,18 @@ export default function Home({game, setScene}) {
 
   const defaultActions = [
     {
-      label: 'Enter Forest',
-      onClick: ()=>{setScene('forest')},
-      timeSpent: 20,
-      energySpent: 5,
-      unlocked: true
-    },
-    {
-      label: 'Sleep',
+      label: 'Wake up at home',
       onClick: ()=>{
-        game.setAttribute('energy', 100)
+        setScene('home');
+        game.setAttribute('energy', 100);
       },
       timeSpent: 480,
       energySpent: 0,
       unlocked: true
-    },
-    {
-      label: 'Upgrade Shelter',
-      onClick: ()=>{
-          game.upgradeShelter();
-          setHeaders(defaultHeaders);
-          setActions(defaultActions);
-      },
-      timeSpent: 480,
-      energySpent: 50,
-      unlocked: showShelterUpgrade
     }
   ]
 
   const defaultHeaders = [
-    {
-      show: true,
-      content: shelterHeader,
-      style: 'default'
-    }
   ]
 
   const [actions, setActions] = useState(defaultActions);
@@ -53,8 +31,6 @@ export default function Home({game, setScene}) {
 
   useEffect(()=>{
     const updateInterval = setInterval(()=>{
-      setShowShelterUpgrade(game.checkCanAffordShelter() && game.gameData.home.shelters[game.gameData.home.shelterLevel.add(1)] != null);
-      setShelterHeader(game.gameData.home.shelters[game.gameData.home.shelterLevel].description)
       setHeaders(defaultHeaders);
       setActions(defaultActions);
     }, 100)
@@ -67,7 +43,7 @@ export default function Home({game, setScene}) {
     <>
     <Scene
       game={game}
-      descriptor={"You are in a small clearing which you call home."}
+      descriptor={"You have run out of energy and pass out."}
       addHeader={addHeader}
       headers={headers}
       actions={actions}

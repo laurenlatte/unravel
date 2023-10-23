@@ -1,9 +1,7 @@
 import Button from './Button.js'
+import * as TextStyles from './TextStyles.js';
 
 export default function Action({game, label, timeSpent, energySpent, onClick, unlocked, addHeader}) {
-
-
-
   const handleClick = () => {
     if(game.hasEnergy(energySpent)) {
       game.addTime(timeSpent);
@@ -16,7 +14,7 @@ export default function Action({game, label, timeSpent, energySpent, onClick, un
 
   return (
     <>
-    {unlocked && <Button onClick={()=>{handleClick();}}>{label}</Button>}
+    {unlocked && <TextStyles.LinkText onClick={()=>{handleClick();}}>{label}</TextStyles.LinkText>}
     </>
   )
 }

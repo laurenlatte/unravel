@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import {DefaultText} from './TextStyles.js';
 import Number from './Number.js'
 
-function StatDisplay({game}) {
+function StatDisplay({game, setScene}) {
   const [wood, setWood] = useState(game.gameData.resources.wood);
   const [stone, setStone] = useState(game.gameData.resources.stone);
   const [copper, setCopper] = useState(game.gameData.resources.copper);
@@ -22,6 +22,9 @@ function StatDisplay({game}) {
       setMinute(game.gameData.time.minute)
       setHour(game.gameData.time.hour)
       setDay(game.gameData.time.day)
+      if(game.gameData.attributes.energy.lessThanOrEqualTo(0)){
+        setScene('passOut');
+      }
     }, 100)
     return () => {
       clearInterval(updateCheck)
@@ -49,7 +52,7 @@ function StatDisplay({game}) {
   )
 }
 
-export default function Menu({game}) {
+export default function Menu({game, setScene}) {
   return (
     <div style={{
       height: '100%',
@@ -63,7 +66,7 @@ export default function Menu({game}) {
       paddingTop: '20px',
     }}>
       <hr style={{color:'white'}} />
-      <StatDisplay game={game} />
+      <StatDisplay game={game} setScene={setScene} />
     </div>
   )
 }
