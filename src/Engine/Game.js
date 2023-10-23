@@ -174,4 +174,8 @@ export default class Game {
     this.gameData.encounters.activeEncounters.monsters[0].arousal.add(amount);
   }
 
+  removeMonsters() {
+    this.gameData.encounters.activeEncounters.monsters = [];
+  }
+
 }

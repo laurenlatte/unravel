@@ -25,7 +25,10 @@ export default function Encounter({game, setScene}) {
     },
     {
       label: 'Run',
-      onClick: ()=>{setScene('home')},
+      onClick: ()=>{
+        game.removeMonsters();
+        setScene('home');
+      },
       timeSpent: 20,
       energySpent: 5,
       unlocked: true

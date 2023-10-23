@@ -12,6 +12,7 @@ export default function Home({game, setScene}) {
       onClick: ()=>{
         setScene('home');
         game.restCharacter();
+        game.removeMonsters();
       },
       timeSpent: 480,
       energySpent: 0,

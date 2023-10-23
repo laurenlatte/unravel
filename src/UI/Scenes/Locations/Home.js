@@ -24,7 +24,7 @@ export default function Home({game, setScene}) {
       timeSpent: 480,
       energySpent: 0,
       unlocked: true,
-      encounterChance: 0.3,
+      encounterChance: 0.1,
       location: 'forest',
     },
     {

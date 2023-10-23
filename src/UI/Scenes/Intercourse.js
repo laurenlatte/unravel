@@ -10,6 +10,10 @@ export default function Intercourse({game, setScene}) {
   const [monsterArousal, setMonsterArousal] = useState(
     game.gameData.encounters.activeEncounters.monsters[0].arousal
   );
+  const [monsterCame, setMonsterCame] = useState(
+    false
+  )
+  const [isIntro, setIsIntro] = useState(true);
 
   const defaultActions = [
     {
@@ -17,32 +21,44 @@ export default function Intercourse({game, setScene}) {
       onClick: ()=>{
         game.arousePlayer(10);
         game.arouseMonster(10);
+        isIntro == true && setIsIntro(false);
       },
       timeSpent: 20,
       energySpent: 5,
-      unlocked: true,
+      unlocked: !monsterCame,
       encounterChance: 0,
       location: 'forest',
     },
     {
       label: 'Fight',
       onClick: ()=>{
-
+        isIntro == true && setIsIntro(false);
       },
-      timeSpent: 480,
+      timeSpent: 20,
       energySpent: 0,
-      unlocked: true,
+      unlocked: !monsterCame,
       encounterChance: 0,
       location: 'forest',
     },
     {
       label: 'Run',
       onClick: ()=>{
+        game.removeMonsters();
         setScene('home')
       },
       timeSpent: 20,
       energySpent: 25,
-      unlocked: true
+      unlocked: !monsterCame
+    },
+    {
+      label: 'Go Home',
+      onClick: ()=>{
+        game.removeMonsters();
+        setScene('home')
+      },
+      timeSpent: 20,
+      energySpent: 25,
+      unlocked: monsterCame
     }
   ]
 
@@ -50,6 +66,9 @@ export default function Intercourse({game, setScene}) {
     const updateInterval = setInterval(()=>{
       setArousal(game.gameData.attributes.arousal);
       setMonsterArousal(game.gameData.encounters.activeEncounters.monsters[0].arousal);
+      if(game.gameData.encounters.activeEncounters.monsters[0].arousal.greaterThanOrEqualTo(100)) {
+        setMonsterCame(true);
+      }
     }, 100);
     return ()=>{clearInterval(updateInterval)}
   })
@@ -71,8 +90,13 @@ export default function Intercourse({game, setScene}) {
           <TextStyles.DefaultText>Monster Arousal: <Number value={monsterArousal} /></TextStyles.DefaultText> :
           <TextStyles.LewdText>Monster Arousal: <Number value={monsterArousal} /></TextStyles.LewdText>
         }
+        {monsterCame &&
+          <TextStyles.LewdText>The wolf fills your hole with its lewd semen and scampers off into the forest.</TextStyles.LewdText>
+        }
       </div>
+      {isIntro &&
         <TextStyles.LewdText>A lewd warmth fills you as they approach</TextStyles.LewdText>
+      }
         <Actions setScene={setScene} buttonDefinitions={defaultActions} game={game} />
     </div>
   )
