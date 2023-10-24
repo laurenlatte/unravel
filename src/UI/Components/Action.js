@@ -22,7 +22,7 @@ export default function Action({
       setScene('encounter');
     }
     game.addTime(timeSpent);
-    game.subtractAttribute('energy', energySpent);
+    game.gameData.player.subtractEnergy(energySpent);
     onClick();
   }
 

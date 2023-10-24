@@ -11,7 +11,7 @@ export default function Home({game, setScene}) {
       label: 'Wake up at home',
       onClick: ()=>{
         setScene('home');
-        game.restCharacter();
+        game.restPlayerCharacter();
         game.removeMonsters();
       },
       timeSpent: 480,

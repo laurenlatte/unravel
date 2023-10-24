@@ -6,8 +6,8 @@ function StatDisplay({game, setScene, scene}) {
   const [wood, setWood] = useState(game.gameData.resources.wood);
   const [stone, setStone] = useState(game.gameData.resources.stone);
   const [copper, setCopper] = useState(game.gameData.resources.copper);
-  const [arousal, setArousal] = useState(game.gameData.attributes.arousal);
-  const [energy, setEnergy] = useState(game.gameData.attributes.energy);
+  const [arousal, setArousal] = useState(game.gameData.player.getArousal());
+  const [energy, setEnergy] = useState(game.gameData.player.getEnergy());
   const [minute, setMinute] = useState(game.gameData.time.minute);
   const [hour, setHour] = useState(game.gameData.time.hour);
   const [day, setDay] = useState(game.gameData.time.day);
@@ -16,14 +16,14 @@ function StatDisplay({game, setScene, scene}) {
       setWood(game.gameData.resources.wood);
       setStone(game.gameData.resources.stone);
       setCopper(game.gameData.resources.copper);
-      setArousal(game.gameData.attributes.arousal);
-      setEnergy(game.gameData.attributes.energy);
+      setArousal(game.gameData.player.getArousal());
+      setEnergy(game.gameData.player.getEnergy());
       setMinute(game.gameData.time.minute)
       setHour(game.gameData.time.hour)
       setDay(game.gameData.time.day)
-      if(game.gameData.attributes.energy.lessThanOrEqualTo(0) && scene != 'encounter' && scene != 'intercourse' && scene != 'passOutFucked'){
+      if(game.gameData.player.getEnergy() <= 0 && scene != 'encounter' && scene != 'intercourse' && scene != 'passOutFucked'){
         setScene('passOut');
-      } else if(game.gameData.attributes.energy.lessThanOrEqualTo(0)) {
+      } else if(game.gameData.player.getEnergy() <= 0) {
         setScene('passOutFucked');
       }
     }, 100)

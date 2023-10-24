@@ -2,13 +2,16 @@ import {useState, useEffect} from 'react';
 import * as TextStyles from '../Components/TextStyles.js'
 import Number from '../Components/Number.js';
 import Actions from '../Components/Actions.js';
+import Header from '../Components/Header.js';
+
 export default function Intercourse({game, setScene}) {
 
   const [arousal, setArousal] = useState(
-    game.gameData.attributes.arousal
+    game.gameData.player.getArousal()
   );
+
   const [monsterArousal, setMonsterArousal] = useState(
-    game.gameData.encounters.activeEncounters.monsters[0].arousal
+    game.gameData.encounters.activeEncounters.monsters[0].getArousal()
   );
   const [monsterCame, setMonsterCame] = useState(
     false
@@ -20,7 +23,7 @@ export default function Intercourse({game, setScene}) {
       label: 'Cooperate',
       onClick: ()=>{
         game.arousePlayer(10);
-        game.arouseMonster(10);
+        game.arouseMonster(0, 10);
         isIntro == true && setIsIntro(false);
       },
       timeSpent: 20,
@@ -32,6 +35,8 @@ export default function Intercourse({game, setScene}) {
     {
       label: 'Fight',
       onClick: ()=>{
+        game.hurtMonster(0, 10);
+        game.hurtPlayer(0, 10);
         isIntro == true && setIsIntro(false);
       },
       timeSpent: 20,
@@ -64,9 +69,9 @@ export default function Intercourse({game, setScene}) {
 
   useEffect(()=>{
     const updateInterval = setInterval(()=>{
-      setArousal(game.gameData.attributes.arousal);
-      setMonsterArousal(game.gameData.encounters.activeEncounters.monsters[0].arousal);
-      if(game.gameData.encounters.activeEncounters.monsters[0].arousal.greaterThanOrEqualTo(100)) {
+      setArousal(game.gameData.player.getArousal());
+      setMonsterArousal(game.gameData.encounters.activeEncounters.monsters[0].getArousal());
+      if(game.gameData.encounters.activeEncounters.monsters[0].arousal >= 100) {
         setMonsterCame(true);
       }
     }, 100);

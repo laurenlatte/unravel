@@ -1,5 +1,6 @@
 import IncreMath from '../Utils/IncreMath.js';
 import Wolf from './Monsters/Wolf';
+import Player from './Player.js';
 
 const numbers = new IncreMath();
 
@@ -16,11 +17,7 @@ const DEFAULT_GAME_DATA = {
     stone: numbers.createDecimal(0),
     copper: numbers.createDecimal(0),
   },
-  attributes: {
-    arousal: numbers.createDecimal(0),
-    energy: numbers.createDecimal(100),
-    health: numbers.createDecimal(100),
-  },
+  player: new Player(),
   home: {
     shelterLevel: numbers.createDecimal(0),
     upgradeCost: {
@@ -31,13 +28,13 @@ const DEFAULT_GAME_DATA = {
     shelters: {
       0: {
         description: 'A rugged bedding of leaves lays on the ground.',
-        energyRestore: '50',
-        maxEnergy: '100'
+        energyRestore: 50,
+        maxEnergy: 100
       },
       1: {
         description: 'A ramshackle collection of sticks tied with twine roofs a small bedding of leaves on the ground.',
-        energyRestore: '100',
-        maxEnergy: '200',
+        energyRestore: 100,
+        maxEnergy: 200,
       }
     }
   },
@@ -68,24 +65,6 @@ export default class Game {
   subtractResource(resourceName, value) {
     this.gameData.resources[resourceName] =
     this.gameData.resources[resourceName].subtract(value)
-  }
-
-  addAttribute(attributeName, value) {
-    this.gameData.attributes[attributeName] =
-    this.gameData.attributes[attributeName].add(value)
-  }
-
-  subtractAttribute(attributeName, value) {
-    this.gameData.attributes[attributeName] =
-    this.gameData.attributes[attributeName].subtract(value)
-  }
-
-  setAttribute(attributeName, value) {
-    this.gameData.attributes[attributeName] = numbers.createDecimal(value);
-  }
-
-  hasEnergy(energySpent) {
-    return this.gameData.attributes.energy.greaterThanOrEqualTo(energySpent);
   }
 
   checkCanAffordShelter() {
@@ -132,24 +111,25 @@ export default class Game {
     this.gameData.time.minute = newMinutes;
   }
 
-  restCharacter() {
+  restPlayerCharacter() {
     const energyRestored =
     this.gameData.home.shelters[this.gameData.home.shelterLevel].energyRestore;
     const maxEnergy =
     this.gameData.home.shelters[this.gameData.home.shelterLevel].maxEnergy;
     const currentEnergy =
-    this.gameData.attributes.energy;
-    let newEnergy = currentEnergy.add(energyRestored);
-    if(newEnergy.greaterThanOrEqualTo(maxEnergy)) {
-      this.setAttribute('energy', maxEnergy);
+    this.gameData.player.getEnergy();
+    let newEnergy = currentEnergy + energyRestored;
+    if(newEnergy >= maxEnergy) {
+      this.gameData.player.setEnergy(maxEnergy);
     } else {
-      this.setAttribute('energy', newEnergy);
+      this.gameData.player.setEnergy(newEnergy);
     }
   }
 
   spawnMonster(location) {
     const monsters = this.gameData.encounters[location].monsters
-    const monster = new monsters[0](this, );
+    const monsterId = this.gameData.encounters.activeEncounters.monsters.length;
+    const monster = new monsters[0](monsterId);
     return monster
   }
 
@@ -159,19 +139,20 @@ export default class Game {
     [...this.gameData.encounters.activeEncounters.monsters, monster];
   }
 
-  damagePlayer(amount) {
-    this.gameData.attributes.health =
-    this.gameData.attributes.health.subtract(amount);
-  }
-
   arousePlayer(amount) {
-    this.gameData.attributes.arousal =
-    this.gameData.attributes.arousal.add(amount);
+    this.gameData.player.addArousal(amount)
   }
 
-  arouseMonster(amount) {
-    this.gameData.encounters.activeEncounters.monsters[0].arousal =
-    this.gameData.encounters.activeEncounters.monsters[0].arousal.add(amount);
+  arouseMonster(id, amount) {
+    this.gameData.encounters.activeEncounters.monsters[id].addArousal(amount)
+  }
+
+  hurtPlayer(amount) {
+    this.gameData.player.addPain(amount)
+  }
+
+  hurtMonster(id, amount) {
+    this.gameData.encounters.activeEncounters.monsters[id].addPain(amount)
   }
 
   removeMonsters() {

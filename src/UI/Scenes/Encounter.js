@@ -2,15 +2,17 @@ import {useEffect, useState} from 'react';
 import Scene from '../Components/Scene.js';
 
 export default function Encounter({game, setScene}) {
-  const monster = game.gameData.encounters.activeEncounters.monsters[0]
-  console.log(monster);
-  const defaultHeaders = [
-    {
-      show: true,
-      content: "A " + monster.name + " has noticed you and is heading in your direction!",
-      style: 'error',
-    }
-  ]
+  const monsters = game.gameData.encounters.activeEncounters.monsters
+  const defaultHeaders = []
+  for(var id in monsters) {
+    var monster = monsters[id];
+    console.log(monster);
+    defaultHeaders.push({
+        show: true,
+        content: "A " + monster.name + " has noticed you and is heading in your direction!",
+        style: 'error',
+    })
+  }
   const defaultActions = [
     {
       label: 'Present your ass',
@@ -40,10 +42,13 @@ export default function Encounter({game, setScene}) {
   const addHeader = (newHeader) => {
     setHeaders([...headers, newHeader]);
   }
+  const descriptor = monsters.length > 1 ?
+  "There are multiple creatures bearing down on you!" :
+  "There is a creature bearing down on you!"
   return (
     <>
     <Scene
-      descriptor={"There is a creature bearing down on you!"}
+      descriptor={descriptor}
       game={game}
       addHeader={addHeader}
       headers={headers}
