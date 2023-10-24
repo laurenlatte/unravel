@@ -6,7 +6,6 @@ export default function Encounter({game, setScene}) {
   const defaultHeaders = []
   for(var id in monsters) {
     var monster = monsters[id];
-    console.log(monster);
     defaultHeaders.push({
         show: true,
         content: "A " + monster.name + " has noticed you and is heading in your direction!",

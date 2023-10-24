@@ -1,6 +1,6 @@
 import IncreMath from '../Utils/IncreMath.js';
-import Wolf from './Monsters/Wolf';
-import Player from './Player.js';
+import Wolf from './Entities/Monsters/Wolf';
+import Player from './Entities/Player.js';
 
 const numbers = new IncreMath();
 

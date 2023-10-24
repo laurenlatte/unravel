@@ -3,6 +3,7 @@ import * as TextStyles from '../Components/TextStyles.js'
 import Number from '../Components/Number.js';
 import Actions from '../Components/Actions.js';
 import Header from '../Components/Header.js';
+import IntercourseActions from '../Components/IntercourseActions.js';
 
 export default function Intercourse({game, setScene}) {
 
@@ -71,7 +72,7 @@ export default function Intercourse({game, setScene}) {
     const updateInterval = setInterval(()=>{
       setArousal(game.gameData.player.getArousal());
       setMonsterArousal(game.gameData.encounters.activeEncounters.monsters[0].getArousal());
-      if(game.gameData.encounters.activeEncounters.monsters[0].arousal >= 100) {
+      if(game.gameData.encounters.activeEncounters.monsters[0].getArousal() >= 100) {
         setMonsterCame(true);
       }
     }, 100);
@@ -102,6 +103,7 @@ export default function Intercourse({game, setScene}) {
       {isIntro &&
         <TextStyles.LewdText>A lewd warmth fills you as they approach</TextStyles.LewdText>
       }
+        <IntercourseActions player={game.gameData.player} monsters={game.gameData.encounters.activeEncounters.monsters} />
         <Actions setScene={setScene} buttonDefinitions={defaultActions} game={game} />
     </div>
   )

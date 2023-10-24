@@ -1,45 +1,18 @@
 
-class BodyPart {
-  constructor(name, position, clothes, target) {
-    this.name = name
-    this.position = position
-    this.clothes = clothes
-    this.positions = {
-      'relaxed': this.name + ' is relaxing. ',
-      'advancing': this.name + ' is advancing towards ' + this.target,
-      'choking': this.name + ' is choking ' + this.target,
-      'rubbing': this.name + ' is rubbing against ' + this.target,
-      'penetrating': this.name + ' is penetrating ' + this.target,
-    }
-    this.target = target
-  }
-
-  setPosition(newPosition) {
-    this.position = newPosition
-  }
-
-  setTarget(newTarget) {
-    this.target = newTarget;
-  }
-
-  getPositionText() {
-    return this.positions[this.position]
-  }
-}
-
-
 export default class Entity {
   constructor(name) {
     this.name = name
     this.bodyParts = {
-      leftArm: new BodyPart('left arm', 'relaxed', 'naked'),
-      rightArm: new BodyPart('right arm', 'relaxed', 'naked'),
+      /*
+      leftArm: new BodyParts.Arm('Left arm', 'relaxed'),
+      rightArm: new BodyParts.Arm('right arm', 'relaxed'),
       leftLeg: new BodyPart('left leg', 'relaxed', 'naked'),
       rightLeg: new BodyPart('right leg', 'relaxed', 'naked'),
       torso: new BodyPart('relaxed', 'naked'),
       head: new BodyPart('relaxed', 'naked'),
       genitals: new BodyPart('relaxed', 'naked'),
       anus: new BodyPart('relaxed', 'naked')
+      */
     }
     this.attributes = {
       arousal: 0,
@@ -106,6 +79,10 @@ export default class Entity {
 
   getName() {
     return this.name;
+  }
+
+  getBodyParts() {
+    return this.bodyParts;
   }
 
   moveBody(bodyPart, position, target) {
