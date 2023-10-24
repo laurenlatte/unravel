@@ -15,8 +15,6 @@ function App() {
 
   const [scene, setScene] = useState('home');
 
-  console.log(scene)
-
   const scenes = {
     'home': <Home game={game} setScene={setScene} />,
     'forest': <Forest game={game} setScene={setScene} />,
