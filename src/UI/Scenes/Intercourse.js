@@ -3,7 +3,7 @@ import * as TextStyles from '../Components/TextStyles.js'
 import Number from '../Components/Number.js';
 import Actions from '../Components/Actions.js';
 import Header from '../Components/Header.js';
-import IntercourseActions from '../Components/IntercourseActions.js';
+import IntercourseAction from '../Components/IntercourseAction.js';
 
 export default function Intercourse({game, setScene}) {
 
@@ -18,6 +18,23 @@ export default function Intercourse({game, setScene}) {
     false
   )
   const [isIntro, setIsIntro] = useState(true);
+
+  var actionData = [];
+  const player = game.gameData.player;
+  const monsters = game.gameData.encounters.activeEncounters.monsters;
+  for(var bodyPartId in player.getBodyParts()) {
+    var bodyPart = player.getBodyParts()[bodyPartId]
+    for(var bodyAction in bodyPart.actions) {
+      actionData.push(
+        {
+          actions: (target) => {bodyPart.actions[bodyAction](target)},
+          targets: monsters[0].bodyParts,
+          name: bodyPart.name,
+        }
+      )
+    }
+  }
+  console.log(actionData);
 
   const defaultActions = [
     {
@@ -103,7 +120,9 @@ export default function Intercourse({game, setScene}) {
       {isIntro &&
         <TextStyles.LewdText>A lewd warmth fills you as they approach</TextStyles.LewdText>
       }
-        <IntercourseActions player={game.gameData.player} monsters={game.gameData.encounters.activeEncounters.monsters} />
+        {actionData.map((data) => {
+          return <IntercourseAction actionData={data} />
+        })}
         <Actions setScene={setScene} buttonDefinitions={defaultActions} game={game} />
     </div>
   )
