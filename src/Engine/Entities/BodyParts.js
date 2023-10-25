@@ -5,7 +5,7 @@ export class BodyPart {
     this.positionId = positionId
     this.positions = {}
     this.actionms = {}
-    this.target = target
+    this.target = target!=undefined ? target : {name: 'undefined'}
   }
 
   setPosition(newPositionId) {
@@ -17,7 +17,9 @@ export class BodyPart {
   }
 
   getPositionText() {
-    return this.positions[this.position]
+    return this.positions[this.positionId].hasTarget == true ?
+    this.name + this.positions[this.positionId].text + this.target.name :
+    this.name + this.positions[this.positionId].text
   }
 }
 
@@ -25,17 +27,24 @@ export class Arm extends BodyPart {
   constructor(name, positionId, target) {
     super(name, positionId, target)
     this.positions = {
-      'relaxed': this.name + ' is relaxing. ',
-      'stroking': this.name + ' is stroking ' + this.target,
-      'choking': this.name + ' is choking ' + this.target,
-      'rubbing': this.name + ' is rubbing against ' + this.target,
-      'penetrating': this.name + ' is penetrating ' + this.target,
-    }
-    this.actions = {
-      'Stroke Cock': (target)=>{
-        this.setPosition('stroking');
-        this.setTarget(target)
+      'relaxed': {
+        text: ' is relaxing. ',
+        hasTarget: false
+      },
+      'stroking': {
+        text: ' is stroking ',
+        hasTarget: true
       }
     }
+    this.actions = [
+      {
+        name: 'Stroke',
+        function: (target)=>{
+            this.setTarget(target.value)
+            this.setPosition('stroking');
+        },
+        targetTypes: [Arm]
+      }
+    ]
   }
 }

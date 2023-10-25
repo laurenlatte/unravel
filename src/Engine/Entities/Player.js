@@ -6,7 +6,7 @@ export default class Player extends Entity {
     super();
     this.bodyParts = {
       leftArm: new BodyParts.Arm('Left arm', 'relaxed'),
-      rightArm: new BodyParts.Arm('right arm', 'relaxed'),
+      rightArm: new BodyParts.Arm('Right arm', 'relaxed'),
     }
   }
 }

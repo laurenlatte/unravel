@@ -27,9 +27,10 @@ export default function Intercourse({game, setScene}) {
     for(var bodyAction in bodyPart.actions) {
       actionData.push(
         {
-          actions: (target) => {bodyPart.actions[bodyAction](target)},
+          actions: bodyPart.actions,
           targets: monsters[0].bodyParts,
           name: bodyPart.name,
+          bodyPart: bodyPart,
         }
       )
     }
