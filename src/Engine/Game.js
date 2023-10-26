@@ -42,12 +42,15 @@ const DEFAULT_GAME_DATA = {
     forest: {
       monsters: [Wolf]
     },
+    forestInterior: {
+      monsters: [Wolf]
+    },
     activeEncounters: {
       monsters: [],
     }
   },
   progression: {
-    houseBuilt: false,
+    stoneMine: false,
   }
 };
 
@@ -157,6 +160,10 @@ export default class Game {
 
   removeMonsters() {
     this.gameData.encounters.activeEncounters.monsters = [];
+  }
+
+  discoverStoneMine() {
+    this.gameData.progression.stoneMine = true;
   }
 
 }

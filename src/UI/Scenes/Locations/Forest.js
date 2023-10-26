@@ -25,7 +25,18 @@ export default function Forest({game, setScene}) {
       timeSpent:60,
       energySpent:15,
       unlocked: true,
-      encounterChance: 0.3,
+      encounterChance: 0.1,
+      location: 'forest',
+    },
+    {
+      label: 'Explore Deeper',
+      onClick: ()=>{
+        setScene({name: 'forestInterior', prevScene: 'forest'});
+      },
+      timeSpent:30,
+      energySpent:15,
+      unlocked: true,
+      encounterChance: 0,
       location: 'forest',
     },
   ]

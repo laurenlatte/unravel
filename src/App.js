@@ -4,6 +4,7 @@ import {useState} from 'react';
 import Menu from './UI/Components/Menu.js';
 import Home from './UI/Scenes/Locations/Home.js';
 import Forest from './UI/Scenes/Locations/Forest.js';
+import ForestInterior from './UI/Scenes/Locations/ForestInterior.js';
 import PassOut from './UI/Scenes/Locations/PassOut.js';
 import PassOutFucked from './UI/Scenes/Locations/PassOutFucked.js';
 import Encounter from './UI/Scenes/Encounter.js';
@@ -15,9 +16,11 @@ function App() {
 
   const [scene, setScene] = useState({name: 'home', prevScene: 'home'});
 
+
   const scenes = {
     'home': <Home game={game} setScene={setScene} prevScene={scene.prevScene}/>,
     'forest': <Forest game={game} setScene={setScene} prevScene={scene.prevScene}/>,
+    'forestInterior': <ForestInterior game={game} setScene={setScene} prevScene={scene.prevScene}/>,
     'passOut': <PassOut game={game} setScene={setScene} prevScene={scene.prevScene}/>,
     'passOutFucked': <PassOutFucked game={game} setScene={setScene} prevScene={scene.prevScene} />,
     'encounter': <Encounter game={game} setScene={setScene} prevScene={scene.prevScene}/>,
