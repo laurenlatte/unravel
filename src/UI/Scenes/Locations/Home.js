@@ -5,6 +5,7 @@ export default function Home({game, setScene}) {
 
   const [showShelterUpgrade, setShowShelterUpgrade] = useState(game.checkCanAffordShelter() && game.gameData.home.shelters[game.gameData.home.shelterLevel.add(1)] != null)
   const [shelterHeader, setShelterHeader] = useState(game.gameData.home.shelters[game.gameData.home.shelterLevel].description);
+  const [showStoneQuarry, setShowStoneQuarry] = useState(game.gameData.progression.stoneMine);
 
   const defaultActions = [
     {
@@ -17,6 +18,15 @@ export default function Home({game, setScene}) {
       location: 'forest',
     },
     {
+      label: 'Enter Stone Quarry',
+      onClick: ()=>{setScene({name: 'stoneQuarry', prevScene: 'home'});},
+      timeSpent: 20,
+      energySpent: 5,
+      unlocked: showStoneQuarry,
+      encounterChance: 0,
+      location: 'forest',
+    },
+    {
       label: 'Sleep',
       onClick: ()=>{
         game.restPlayerCharacter()
@@ -24,7 +34,7 @@ export default function Home({game, setScene}) {
       timeSpent: 480,
       energySpent: 0,
       unlocked: true,
-      encounterChance: 0.1,
+      encounterChance: game.gameData.home.shelters[game.gameData.home.shelterLevel].encounterChance,
       location: 'forest',
     },
     {
@@ -58,6 +68,7 @@ export default function Home({game, setScene}) {
   useEffect(()=>{
     const updateInterval = setInterval(()=>{
       setShowShelterUpgrade(game.checkCanAffordShelter() && game.gameData.home.shelters[game.gameData.home.shelterLevel.add(1)] != null);
+      setShowStoneQuarry(game.gameData.progression.stoneMine)
       setShelterHeader(game.gameData.home.shelters[game.gameData.home.shelterLevel].description)
       setHeaders(defaultHeaders);
       setActions(defaultActions);

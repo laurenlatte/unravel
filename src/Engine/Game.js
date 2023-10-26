@@ -29,12 +29,35 @@ const DEFAULT_GAME_DATA = {
       0: {
         description: 'A rugged bedding of leaves lays on the ground.',
         energyRestore: 50,
-        maxEnergy: 100
+        maxEnergy: 100,
+        encounterChance: 0.3,
+        upgradeCost: {
+          wood: 10,
+          stone: 0,
+          copper: 0,
+        },
       },
       1: {
         description: 'A ramshackle collection of sticks tied with twine roofs a small bedding of leaves on the ground.',
         energyRestore: 100,
         maxEnergy: 200,
+        encounterChance: 0.1,
+        upgradeCost: {
+          wood: 20,
+          stone: 10,
+          copper: 0,
+        },
+      },
+      2: {
+        description: 'A rugged log cabin stands proudly in the clearing.',
+        energyRestore: 250,
+        maxEnergy: 500,
+        encounterChance: 0,
+        upgradeCost: {
+          wood: 100,
+          stone: 50,
+          copper: 10,
+        },
       }
     }
   },
@@ -43,6 +66,9 @@ const DEFAULT_GAME_DATA = {
       monsters: [Wolf]
     },
     forestInterior: {
+      monsters: [Wolf]
+    },
+    stoneQuarry: {
       monsters: [Wolf]
     },
     activeEncounters: {
@@ -71,10 +97,11 @@ export default class Game {
   }
 
   checkCanAffordShelter() {
+    const upgradeCost = this.gameData.home.shelters[this.gameData.home.shelterLevel].upgradeCost
     if(
-      this.gameData.resources.wood.greaterThanOrEqualTo(this.gameData.home.upgradeCost.wood) &&
-      this.gameData.resources.stone.greaterThanOrEqualTo(this.gameData.home.upgradeCost.stone) &&
-      this.gameData.resources.copper.greaterThanOrEqualTo(this.gameData.home.upgradeCost.copper)
+      this.gameData.resources.wood.greaterThanOrEqualTo(upgradeCost.wood) &&
+      this.gameData.resources.stone.greaterThanOrEqualTo(upgradeCost.stone) &&
+      this.gameData.resources.copper.greaterThanOrEqualTo(upgradeCost.copper)
     ) {
       return true
     } else {
@@ -83,19 +110,20 @@ export default class Game {
   }
 
   upgradeShelter() {
+    const upgradeCost = this.gameData.home.shelters[this.gameData.home.shelterLevel].upgradeCost
     this.gameData.home.shelterLevel =
     this.gameData.home.shelterLevel.add(1);
     this.gameData.resources.wood =
     this.gameData.resources.wood.subtract(
-      this.gameData.home.upgradeCost.wood
+      upgradeCost.wood
     )
     this.gameData.resources.stone =
     this.gameData.resources.stone.subtract(
-      this.gameData.home.upgradeCost.stone
+      upgradeCost.stone
     )
     this.gameData.resources.copper =
     this.gameData.resources.copper.subtract(
-      this.gameData.home.upgradeCost.copper
+      upgradeCost.copper
     )
   }
 
