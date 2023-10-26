@@ -19,7 +19,7 @@ export default function Action({
   const handleClick = () => {
     if(numbers.getRandomChance(encounterChance) == true) {
       game.doEncounter(location);
-      setScene('encounter');
+      setScene({name: 'encounter', prevScene: location});
     }
     game.addTime(timeSpent);
     game.gameData.player.subtractEnergy(energySpent);

@@ -13,22 +13,22 @@ import Game from './Engine/Game.js';
 function App() {
   const game = new Game();
 
-  const [scene, setScene] = useState('home');
+  const [scene, setScene] = useState({name: 'home', prevScene: 'home'});
 
   const scenes = {
-    'home': <Home game={game} setScene={setScene} />,
-    'forest': <Forest game={game} setScene={setScene} />,
-    'passOut': <PassOut game={game} setScene={setScene} />,
-    'passOutFucked': <PassOutFucked game={game} setScene={setScene} />,
-    'encounter': <Encounter game={game} setScene={setScene} />,
-    'intercourse': <Intercourse game={game} setScene={setScene} />
+    'home': <Home game={game} setScene={setScene} prevScene={scene.prevScene}/>,
+    'forest': <Forest game={game} setScene={setScene} prevScene={scene.prevScene}/>,
+    'passOut': <PassOut game={game} setScene={setScene} prevScene={scene.prevScene}/>,
+    'passOutFucked': <PassOutFucked game={game} setScene={setScene} prevScene={scene.prevScene} />,
+    'encounter': <Encounter game={game} setScene={setScene} prevScene={scene.prevScene}/>,
+    'intercourse': <Intercourse game={game} setScene={setScene} prevScene={scene.prevScene}/>
   }
 
   return (
     <div className="App">
       <div className="App-header">
         <Menu game={game} setScene={setScene} scene={scene} />
-        {scenes[scene]}
+        {scenes[scene.name]}
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ export default class Player extends Entity {
     this.bodyParts = {
       leftArm: new BodyParts.Arm('Left arm', 'relaxed'),
       rightArm: new BodyParts.Arm('Right arm', 'relaxed'),
+      vagina: new BodyParts.Vagina('Pussy', 'relaxed'),
     }
   }
 }

@@ -10,7 +10,7 @@ export default function Home({game, setScene}) {
     {
       label: 'Wake up at home',
       onClick: ()=>{
-        setScene('home');
+        setScene({name: 'home', prevScene: 'passOut'});
         game.restPlayerCharacter();
       },
       timeSpent: 480,

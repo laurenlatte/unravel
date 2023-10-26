@@ -7,7 +7,7 @@ export default function Forest({game, setScene}) {
   const defaultActions = [
     {
       label: 'Go Home',
-      onClick: ()=>{setScene('home')},
+      onClick: ()=>{setScene({name: 'home', prevScene: 'forest'})},
       timeSpent: 20,
       energySpent: 5,
       unlocked: true

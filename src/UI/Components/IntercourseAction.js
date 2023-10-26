@@ -3,7 +3,7 @@ import Select from 'react-select';
 import Action from './Action.js';
 import {useState} from 'react';
 
-export default function IntercourseAction({actionData}) {
+export default function IntercourseAction({actionData, game, setIsIntro}) {
   const [targets, setTargets] = useState(actionData.targets);
   const [actions, setActions] = useState(actionData.actions);
 
@@ -21,6 +21,11 @@ export default function IntercourseAction({actionData}) {
   console.log(targetList);
   console.log(target);
 
+  const doArousal = (arousalGain) => {
+    game.arousePlayer(arousalGain);
+    game.arouseMonster(0, arousalGain);
+  }
+
   return (
     <div>
     <div style={{display: 'inline-block', textAlign: 'left', width: '75%'}}>
@@ -36,13 +41,20 @@ export default function IntercourseAction({actionData}) {
     <div style={{display: 'flex', width: '100%', textAlign: 'center', alignItems: 'center'}}>
       {actions.map((data)=>{
         var isAvailable = false;
+        var arousalGain = 0;
         for(var targetType in data.targetTypes) {
-          if(target.value instanceof data.targetTypes[targetType]) {
+          if(target.value instanceof data.targetTypes[targetType].type) {
             isAvailable = true;
+            if(arousalGain != data.targetTypes[targetType].arousalGain) {
+              arousalGain = data.targetTypes[targetType].arousalGain
+            }
           }
         }
-        return isAvailable == true ?
-        <TextStyles.LinkText onClick={()=>{data.function(target); setPositionText(actionData.bodyPart.getPositionText())}}>{data.name}</TextStyles.LinkText> :
+        return isAvailable == true ? (
+          <div style={{marginRight: '10px'}}>
+          <TextStyles.LinkText onClick={()=>{setIsIntro(false); data.function(target); setPositionText(actionData.bodyPart.getPositionText()); doArousal(arousalGain);}}>{data.name}</TextStyles.LinkText>
+          </div>
+        ) :
         null
       })}
     </div>

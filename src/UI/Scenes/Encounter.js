@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import Scene from '../Components/Scene.js';
 
-export default function Encounter({game, setScene}) {
+export default function Encounter({game, setScene, prevScene}) {
   const monsters = game.gameData.encounters.activeEncounters.monsters
   const defaultHeaders = []
   for(var id in monsters) {
@@ -17,7 +17,7 @@ export default function Encounter({game, setScene}) {
       label: 'Present your ass',
       onClick: ()=>{
         game.arousePlayer(10);
-        setScene('intercourse');
+        setScene({name: 'intercourse', prevScene: prevScene});
       },
       timeSpent: 5,
       energySpent: 0,
@@ -25,10 +25,10 @@ export default function Encounter({game, setScene}) {
       encounterChance: 0
     },
     {
-      label: 'Run',
+      label: 'Run Home',
       onClick: ()=>{
         game.removeMonsters();
-        setScene('home');
+        setScene({name: 'home', prevScene: 'encounter'});
       },
       timeSpent: 20,
       energySpent: 5,

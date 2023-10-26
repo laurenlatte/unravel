@@ -22,9 +22,9 @@ function StatDisplay({game, setScene, scene}) {
       setHour(game.gameData.time.hour)
       setDay(game.gameData.time.day)
       if(game.gameData.player.getEnergy() <= 0 && scene != 'encounter' && scene != 'intercourse' && scene != 'passOutFucked'){
-        setScene('passOut');
+        setScene({name: 'passOut', prevScene: scene});
       } else if(game.gameData.player.getEnergy() <= 0) {
-        setScene('passOutFucked');
+        setScene({name: 'passOutFucked', prevScene: scene});
       }
     }, 100)
     return () => {

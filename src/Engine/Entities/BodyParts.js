@@ -43,7 +43,97 @@ export class Arm extends BodyPart {
             this.setTarget(target.value)
             this.setPosition('stroking');
         },
-        targetTypes: [Arm]
+        targetTypes: [
+          {type: Arm, arousalGain: 5},
+          {type: Penis, arousalGain: 10},
+        ]
+      }
+    ]
+  }
+}
+
+export class Penis extends BodyPart {
+  constructor(name, positionId, target) {
+    super(name, positionId, target)
+    this.positions = {
+      'relaxed': {
+        text: ' is relaxing. ',
+        hasTarget: false
+      },
+      'rubbing': {
+        text: ' is rubbing against ',
+        hasTarget: true
+      },
+      'penetrating': {
+        text: ' is penetrating ',
+        hasTarget: true
+      }
+    }
+    this.actions = [
+      {
+        name: 'Rub',
+        function: (target)=>{
+            this.setTarget(target.value)
+            this.setPosition('rubbing');
+        },
+        targetTypes: [
+          {type: Arm, arousalGain: 10},
+          {type: Vagina, arousalGain: 15},
+        ]
+      },
+      {
+        name: 'Penetrate',
+        function: (target)=>{
+            this.setTarget(target.value)
+            this.setPosition('penetrating');
+        },
+        targetTypes: [
+          {type: Vagina, arousalGain: 20}
+        ]
+      }
+    ]
+  }
+}
+
+export class Vagina extends BodyPart {
+  constructor(name, positionId, target) {
+    super(name, positionId, target)
+    this.positions = {
+      'relaxed': {
+        text: ' is relaxing. ',
+        hasTarget: false
+      },
+      'rubbing': {
+        text: ' is rubbing against ',
+        hasTarget: true
+      },
+      'penetrated': {
+        text: ' is being penetrated by ',
+        hasTarget: true
+      }
+    }
+    this.actions = [
+      {
+        name: 'Rub',
+        function: (target)=>{
+            this.setTarget(target.value)
+            this.setPosition('rubbing');
+        },
+        targetTypes: [
+          {type: Arm, arousalGain: 10},
+          {type: Penis, arousalGain: 15},
+        ]
+      },
+      {
+        name: 'Envelop',
+        function: (target)=>{
+            this.setTarget(target.value)
+            this.setPosition('penetrated');
+        },
+        targetTypes: [
+          {type: Arm, arousalGain: 15},
+          {type: Penis, arousalGain: 25},
+        ]
       }
     ]
   }

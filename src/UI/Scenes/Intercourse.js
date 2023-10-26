@@ -5,7 +5,7 @@ import Actions from '../Components/Actions.js';
 import Header from '../Components/Header.js';
 import IntercourseAction from '../Components/IntercourseAction.js';
 
-export default function Intercourse({game, setScene}) {
+export default function Intercourse({game, setScene, prevScene}) {
 
   const [arousal, setArousal] = useState(
     game.gameData.player.getArousal()
@@ -24,61 +24,24 @@ export default function Intercourse({game, setScene}) {
   const monsters = game.gameData.encounters.activeEncounters.monsters;
   for(var bodyPartId in player.getBodyParts()) {
     var bodyPart = player.getBodyParts()[bodyPartId]
-    for(var bodyAction in bodyPart.actions) {
-      actionData.push(
-        {
-          actions: bodyPart.actions,
-          targets: monsters[0].bodyParts,
-          name: bodyPart.name,
-          bodyPart: bodyPart,
-        }
-      )
-    }
+    actionData.push(
+      {
+        actions: bodyPart.actions,
+        targets: monsters[0].bodyParts,
+        name: bodyPart.name,
+        bodyPart: bodyPart,
+      }
+    )
   }
   console.log(actionData);
 
   const defaultActions = [
     {
-      label: 'Cooperate',
-      onClick: ()=>{
-        game.arousePlayer(10);
-        game.arouseMonster(0, 10);
-        isIntro == true && setIsIntro(false);
-      },
-      timeSpent: 20,
-      energySpent: 5,
-      unlocked: !monsterCame,
-      encounterChance: 0,
-      location: 'forest',
-    },
-    {
-      label: 'Fight',
-      onClick: ()=>{
-        game.hurtMonster(0, 10);
-        game.hurtPlayer(0, 10);
-        isIntro == true && setIsIntro(false);
-      },
-      timeSpent: 20,
-      energySpent: 0,
-      unlocked: !monsterCame,
-      encounterChance: 0,
-      location: 'forest',
-    },
-    {
-      label: 'Run',
+      label: 'Return',
       onClick: ()=>{
         game.removeMonsters();
-        setScene('home')
-      },
-      timeSpent: 20,
-      energySpent: 25,
-      unlocked: !monsterCame
-    },
-    {
-      label: 'Go Home',
-      onClick: ()=>{
-        game.removeMonsters();
-        setScene('home')
+        console.log(prevScene);
+        setScene({name: prevScene, prevScene: 'intercourse'});
       },
       timeSpent: 20,
       energySpent: 25,
@@ -88,10 +51,14 @@ export default function Intercourse({game, setScene}) {
 
   useEffect(()=>{
     const updateInterval = setInterval(()=>{
-      setArousal(game.gameData.player.getArousal());
-      setMonsterArousal(game.gameData.encounters.activeEncounters.monsters[0].getArousal());
-      if(game.gameData.encounters.activeEncounters.monsters[0].getArousal() >= 100) {
-        setMonsterCame(true);
+      try {
+        setArousal(game.gameData.player.getArousal());
+        setMonsterArousal(game.gameData.encounters.activeEncounters.monsters[0].getArousal());
+        if(game.gameData.encounters.activeEncounters.monsters[0].getArousal() >= 100) {
+          setMonsterCame(true);
+        }
+      } catch {
+        console.log("Ran into error updating intercourse scene")
       }
     }, 100);
     return ()=>{clearInterval(updateInterval)}
@@ -106,7 +73,7 @@ export default function Intercourse({game, setScene}) {
       top: '0',
       right: '0',
       backgroundColor: 'black',
-      overflowX: 'hidden',
+      overflowX: 'scroll',
       paddingTop: '20px',
     }}>
       <div style={{display: 'inline-block'}}>
@@ -115,16 +82,18 @@ export default function Intercourse({game, setScene}) {
           <TextStyles.LewdText>Monster Arousal: <Number value={monsterArousal} /></TextStyles.LewdText>
         }
         {monsterCame &&
-          <TextStyles.LewdText>The wolf fills your hole with its lewd semen and scampers off into the forest.</TextStyles.LewdText>
+          <TextStyles.LewdText>The wolf covers you in its warm semen and scampers off into the forest.</TextStyles.LewdText>
         }
       </div>
       {isIntro &&
         <TextStyles.LewdText>A lewd warmth fills you as they approach</TextStyles.LewdText>
       }
-        {actionData.map((data) => {
-          return <IntercourseAction actionData={data} />
+        {monsterCame == false && actionData.map((data) => {
+          return <IntercourseAction actionData={data} game={game} setIsIntro={setIsIntro} />
         })}
-        <Actions setScene={setScene} buttonDefinitions={defaultActions} game={game} />
+        {monsterCame &&
+          <Actions setScene={setScene} buttonDefinitions={defaultActions} game={game} />
+        }
     </div>
   )
 }
