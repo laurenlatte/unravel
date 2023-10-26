@@ -24,6 +24,7 @@ function StatDisplay({game, setScene, scene}) {
       if(game.gameData.player.getEnergy() <= 0 && scene != 'encounter' && scene != 'intercourse' && scene != 'passOutFucked'){
         setScene({name: 'passOut', prevScene: scene});
       } else if(game.gameData.player.getEnergy() <= 0) {
+        game.removeMonsters();
         setScene({name: 'passOutFucked', prevScene: scene});
       }
     }, 100)

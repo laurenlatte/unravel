@@ -138,3 +138,47 @@ export class Vagina extends BodyPart {
     ]
   }
 }
+
+export class Anus extends BodyPart {
+  constructor(name, positionId, target) {
+    super(name, positionId, target)
+    this.positions = {
+      'relaxed': {
+        text: ' is relaxing. ',
+        hasTarget: false
+      },
+      'rubbing': {
+        text: ' is rubbing against ',
+        hasTarget: true
+      },
+      'penetrated': {
+        text: ' is being penetrated by ',
+        hasTarget: true
+      }
+    }
+    this.actions = [
+      {
+        name: 'Rub',
+        function: (target)=>{
+            this.setTarget(target.value)
+            this.setPosition('rubbing');
+        },
+        targetTypes: [
+          {type: Arm, arousalGain: 10},
+          {type: Penis, arousalGain: 15},
+        ]
+      },
+      {
+        name: 'Envelop',
+        function: (target)=>{
+            this.setTarget(target.value)
+            this.setPosition('penetrated');
+        },
+        targetTypes: [
+          {type: Arm, arousalGain: 15},
+          {type: Penis, arousalGain: 25},
+        ]
+      }
+    ]
+  }
+}
