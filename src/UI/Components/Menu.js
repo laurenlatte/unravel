@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import {DefaultText} from './TextStyles.js';
 import Number from './Number.js'
+import face from '../Images/face.png'
 
 function StatDisplay({game, setScene, scene}) {
   const [wood, setWood] = useState(game.gameData.resources.wood);
@@ -67,6 +68,7 @@ export default function Menu({game, setScene, scene}) {
       overflowX: 'hidden',
       paddingTop: '20px',
     }}>
+      <img src={face} />
       <hr style={{color:'white'}} />
       <StatDisplay game={game} scene={scene} setScene={setScene} />
     </div>
