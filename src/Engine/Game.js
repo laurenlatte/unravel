@@ -1,5 +1,6 @@
 import IncreMath from '../Utils/IncreMath.js';
 import Wolf from './Entities/Monsters/Wolf';
+import Bear from './Entities/Monsters/Bear';
 import Player from './Entities/Player.js';
 
 const numbers = new IncreMath();
@@ -66,10 +67,10 @@ const DEFAULT_GAME_DATA = {
       monsters: [Wolf]
     },
     forestInterior: {
-      monsters: [Wolf]
+      monsters: [Wolf, Bear]
     },
     stoneQuarry: {
-      monsters: [Wolf]
+      monsters: [Wolf, Bear]
     },
     activeEncounters: {
       monsters: [],
@@ -160,7 +161,7 @@ export default class Game {
   spawnMonster(location) {
     const monsters = this.gameData.encounters[location].monsters
     const monsterId = this.gameData.encounters.activeEncounters.monsters.length;
-    const monster = new monsters[0](monsterId);
+    const monster = new monsters[Math.floor(Math.random() * monsters.length)](monsterId);
     return monster
   }
 

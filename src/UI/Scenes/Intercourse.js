@@ -82,7 +82,7 @@ export default function Intercourse({game, setScene, prevScene}) {
           <TextStyles.LewdText>Monster Arousal: <Number value={monsterArousal} /></TextStyles.LewdText>
         }
         {monsterCame &&
-          <TextStyles.LewdText>The wolf covers you in its warm semen and scampers off into the forest.</TextStyles.LewdText>
+          <TextStyles.LewdText>The {game.gameData.encounters.activeEncounters.monsters[0].name} covers you in its warm semen and scampers off into the forest.</TextStyles.LewdText>
         }
       </div>
       {isIntro &&
