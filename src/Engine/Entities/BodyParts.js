@@ -51,7 +51,7 @@ export class Arm extends BodyPart {
     }
     this.actions = [
       ACTIONTYPES.stroke,
-      ACTIONTYPES.rub,
+      ACTIONTYPES.appendageRub,
       ACTIONTYPES.penetrate
     ]
   }
@@ -75,7 +75,7 @@ export class Penis extends BodyPart {
       }
     }
     this.actions = [
-      ACTIONTYPES.rub,
+      ACTIONTYPES.appendageRub,
       ACTIONTYPES.penetrate,
     ]
   }
@@ -99,7 +99,7 @@ export class Vagina extends BodyPart {
       }
     }
     this.actions = [
-      ACTIONTYPES.rub,
+      ACTIONTYPES.genitalRub,
       ACTIONTYPES.envelop,
     ]
   }
@@ -123,7 +123,7 @@ export class Anus extends BodyPart {
       }
     }
     this.actions = [
-      ACTIONTYPES.rub,
+      ACTIONTYPES.genitalRub,
       ACTIONTYPES.envelop,
     ]
   }
@@ -144,7 +144,7 @@ const ACTIONTYPES = {
       {type: Penis, arousalGain: 10},
     ]
   },
-  rub: {
+  appendageRub: {
     name: 'Rub',
     function: (part, target)=>{
         part.setTarget(target.value)
@@ -155,6 +155,22 @@ const ACTIONTYPES = {
     targetTypes: [
       {type: Anus, arousalGain: 10},
       {type: Vagina, arousalGain: 15},
+      {type: Penis, arousalGain: 5},
+    ]
+  },
+  genitalRub: {
+    name: 'Rub',
+    function: (part, target)=>{
+        part.setTarget(target.value)
+        part.setPosition('rubbing');
+        target.value.setPosition('rubbing')
+        target.value.setTarget(part)
+    },
+    targetTypes: [
+      {type: Anus, arousalGain: 10},
+      {type: Vagina, arousalGain: 15},
+      {type: Arm, arousalGain: 5},
+      {type: Penis, arousalGain: 5},
     ]
   },
   envelop: {

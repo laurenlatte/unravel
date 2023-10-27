@@ -8,6 +8,7 @@ export default class Player extends Entity {
       leftArm: new BodyParts.Arm('Left arm', 'relaxed', 0),
       rightArm: new BodyParts.Arm('Right arm', 'relaxed', 0),
       vagina: new BodyParts.Vagina('Pussy', 'relaxed', 0),
+      anus: new BodyParts.Anus('Asshole', 'relaxed', 0),
     }
   }
 }

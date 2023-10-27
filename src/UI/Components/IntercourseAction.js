@@ -66,6 +66,7 @@ export default function IntercourseAction({actionData, game, setIsIntro, setActi
             doArousal(arousalGain);
             doMonsterActions();
             setPositionText(actionData.bodyPart.getPositionText());
+            game.gameData.player.subtractEnergy(5);
           }}>{data.name}</TextStyles.LinkText>
           </div>
         ) :

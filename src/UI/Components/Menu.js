@@ -21,7 +21,8 @@ function StatDisplay({game, setScene, scene}) {
       setMinute(game.gameData.time.minute)
       setHour(game.gameData.time.hour)
       setDay(game.gameData.time.day)
-      if(game.gameData.player.getEnergy() <= 0 && scene != 'encounter' && scene != 'intercourse' && scene != 'passOutFucked'){
+      if(game.gameData.player.getEnergy() <= 0 && scene.name != 'encounter' && scene.name != 'intercourse' && scene.name != 'passOutFucked'){
+        console.log("scene is ")
         setScene({name: 'passOut', prevScene: scene});
       } else if(game.gameData.player.getEnergy() <= 0) {
         game.removeMonsters();

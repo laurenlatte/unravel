@@ -44,7 +44,7 @@ export default function Home({game, setScene}) {
     <>
     <Scene
       game={game}
-      descriptor={"You are fucked brutally as you slip in and out of consciousness."}
+      descriptor={"You run out of energy and are fucked brutally as you slip in and out of consciousness."}
       addHeader={addHeader}
       headers={headers}
       actions={actions}
