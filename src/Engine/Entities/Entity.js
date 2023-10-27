@@ -17,6 +17,7 @@ export default class Entity {
     }
     this.attributes = {
       arousal: 0,
+      maxArousal: 100,
       pain: 0,
       energy: 100,
     }
@@ -42,6 +43,10 @@ export default class Entity {
     return this.attributes.energy;
   }
 
+  getMaxArousal() {
+    return this.attributes.maxArousal;
+  }
+
   setArousal(value) {
     this.attributes.arousal = value;
   }
@@ -52,6 +57,10 @@ export default class Entity {
 
   setEnergy(value) {
     this.attributes.energy = value;
+  }
+
+  setMaxArousal(value) {
+    this.attributes.maxArousal = value;
   }
 
   addArousal(value) {
@@ -66,6 +75,10 @@ export default class Entity {
     this.attributes.energy += value;
   }
 
+  addMaxArousal(value) {
+    this.attributes.maxArousal += value;
+  }
+
   subtractArousal(value) {
     this.attributes.arousal -= value;
   }
@@ -76,6 +89,10 @@ export default class Entity {
 
   subtractEnergy(value) {
     this.attributes.energy -= value;
+  }
+
+  subtractMaxArousal(value) {
+    this.attributes.maxArousal -= value;
   }
 
   getName() {

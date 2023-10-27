@@ -16,6 +16,9 @@ export default function Intercourse({game, setScene, prevScene}) {
   const [monsterArousal, setMonsterArousal] = useState(
     game.gameData.encounters.activeEncounters.monsters[0].getArousal()
   );
+
+  const maxMonsterArousal = game.gameData.encounters.activeEncounters.monsters[0].getMaxArousal();
+
   const [monsterCame, setMonsterCame] = useState(
     false
   )
@@ -57,10 +60,10 @@ export default function Intercourse({game, setScene, prevScene}) {
       try {
         setArousal(game.gameData.player.getArousal());
         setMonsterArousal(game.gameData.encounters.activeEncounters.monsters[0].getArousal());
-        if(game.gameData.encounters.activeEncounters.monsters[0].getArousal() >= 100) {
+        if(game.gameData.encounters.activeEncounters.monsters[0].getArousal() >= game.gameData.encounters.activeEncounters.monsters[0].getMaxArousal()) {
           setMonsterCame(true);
         }
-        if(game.gameData.player.getArousal() >= 100) {
+        if(game.gameData.player.getArousal() >= game.gameData.player.getMaxArousal()) {
           setPlayerCame(true);
         }
         if(monsterCame && playerCame) {
@@ -86,7 +89,7 @@ export default function Intercourse({game, setScene, prevScene}) {
       paddingTop: '20px',
     }}>
       <div style={{display: 'inline-block'}}>
-        {monsterArousal <= 50 ?
+        {monsterArousal <= Math.floor(maxMonsterArousal/2) ?
           <TextStyles.DefaultText>Monster Arousal: <Number value={monsterArousal} /></TextStyles.DefaultText> :
           <TextStyles.LewdText>Monster Arousal: <Number value={monsterArousal} /></TextStyles.LewdText>
         }
