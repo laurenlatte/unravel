@@ -34,6 +34,14 @@ export class Arm extends BodyPart {
       'stroking': {
         text: ' is stroking ',
         hasTarget: true
+      },
+      'rubbing': {
+        text: ' is rubbing against ',
+        hasTarget: true,
+      },
+      'penetrating': {
+        text: ' is penetrating ',
+        hasTarget: true,
       }
     }
     this.actions = [
@@ -46,6 +54,28 @@ export class Arm extends BodyPart {
         targetTypes: [
           {type: Arm, arousalGain: 5},
           {type: Penis, arousalGain: 10},
+        ]
+      },
+      {
+        name: 'Rub',
+        function: (target)=>{
+            this.setTarget(target.value)
+            this.setPosition('rubbing');
+        },
+        targetTypes: [
+          {type: Anus, arousalGain: 10},
+          {type: Vagina, arousalGain: 15},
+        ]
+      },
+      {
+        name: 'Penetrate',
+        function: (target)=>{
+            this.setTarget(target.value)
+            this.setPosition('penetrating');
+        },
+        targetTypes: [
+          {type: Anus, arousalGain: 15},
+          {type: Vagina, arousalGain: 20},
         ]
       }
     ]
@@ -79,6 +109,7 @@ export class Penis extends BodyPart {
         targetTypes: [
           {type: Arm, arousalGain: 10},
           {type: Vagina, arousalGain: 15},
+          {type: Anus, arousalGain: 15}
         ]
       },
       {
@@ -88,7 +119,8 @@ export class Penis extends BodyPart {
             this.setPosition('penetrating');
         },
         targetTypes: [
-          {type: Vagina, arousalGain: 20}
+          {type: Vagina, arousalGain: 20},
+          {type: Anus, arousalGain: 20}
         ]
       }
     ]

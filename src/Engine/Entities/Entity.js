@@ -1,7 +1,8 @@
 
 export default class Entity {
-  constructor(name) {
+  constructor(id, name) {
     this.name = name
+    this.id = id;
     this.bodyParts = {
       /*
       leftArm: new BodyParts.Arm('Left arm', 'relaxed'),
