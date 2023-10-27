@@ -38,7 +38,9 @@ export default class Monster extends Entity {
           // choose random action
           const chosenActionData = this.getCompatiblePartsAndActions(playerParts, actions);
           console.log(chosenActionData);
-          chosenActionData.action.function({value: chosenActionData.part, name: chosenActionData.part.name});
+          console.log("Body part is ")
+          console.log(bodyPart);
+          chosenActionData.action.function(bodyPart, {value: chosenActionData.part, name: chosenActionData.part.name});
           player.addArousal(chosenActionData.arousalGain);
           this.addArousal(chosenActionData.arousalGain);
           actionLabels = [...actionLabels, this.name + "'s " + bodyPart.name + ' is performing ' + chosenActionData.action.name + ' on ' + chosenActionData.part.name];

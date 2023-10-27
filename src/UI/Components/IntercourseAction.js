@@ -57,7 +57,7 @@ export default function IntercourseAction({actionData, game, setIsIntro, setActi
           <div style={{marginRight: '10px'}}>
           <TextStyles.LinkText onClick={()=>{
             setIsIntro(false);
-            data.function(target);
+            data.function(actionData.bodyPart, target);
             if(playerCame) {
               game.gameData.player.setArousal(0);
               setPlayerCame(false);
