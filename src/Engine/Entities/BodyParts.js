@@ -1,10 +1,12 @@
 
 export class BodyPart {
-  constructor(name, positionId, target) {
+  constructor(name, positionId, parentId, target) {
     this.name = name
     this.positionId = positionId
+    this.parentId = parentId
     this.positions = {}
-    this.actionms = {}
+    this.actionms = {};
+    this.isOccupied = false;
     this.target = target!=undefined ? target : {name: 'undefined'}
   }
 
@@ -14,6 +16,10 @@ export class BodyPart {
 
   setTarget(newTarget) {
     this.target = newTarget;
+  }
+
+  setIsOccupied(value) {
+    this.isOccupied = value;
   }
 
   getPositionText() {
@@ -50,6 +56,8 @@ export class Arm extends BodyPart {
         function: (target)=>{
             this.setTarget(target.value)
             this.setPosition('stroking');
+            target.value.setPosition('stroking')
+            target.value.setTarget(this)
         },
         targetTypes: [
           {type: Arm, arousalGain: 5},
@@ -61,6 +69,8 @@ export class Arm extends BodyPart {
         function: (target)=>{
             this.setTarget(target.value)
             this.setPosition('rubbing');
+            target.value.setPosition('rubbing')
+            target.value.setTarget(this)
         },
         targetTypes: [
           {type: Anus, arousalGain: 10},
@@ -72,6 +82,8 @@ export class Arm extends BodyPart {
         function: (target)=>{
             this.setTarget(target.value)
             this.setPosition('penetrating');
+            target.value.setPosition('penetrated')
+            target.value.setTarget(this)
         },
         targetTypes: [
           {type: Anus, arousalGain: 15},
@@ -105,6 +117,8 @@ export class Penis extends BodyPart {
         function: (target)=>{
             this.setTarget(target.value)
             this.setPosition('rubbing');
+            target.value.setPosition('rubbing')
+            target.value.setTarget(this)
         },
         targetTypes: [
           {type: Arm, arousalGain: 10},
@@ -117,6 +131,8 @@ export class Penis extends BodyPart {
         function: (target)=>{
             this.setTarget(target.value)
             this.setPosition('penetrating');
+            target.value.setPosition('penetrated')
+            target.value.setTarget(this)
         },
         targetTypes: [
           {type: Vagina, arousalGain: 20},
@@ -150,6 +166,8 @@ export class Vagina extends BodyPart {
         function: (target)=>{
             this.setTarget(target.value)
             this.setPosition('rubbing');
+            target.value.setPosition('rubbing')
+            target.value.setTarget(this)
         },
         targetTypes: [
           {type: Arm, arousalGain: 10},
@@ -161,6 +179,8 @@ export class Vagina extends BodyPart {
         function: (target)=>{
             this.setTarget(target.value)
             this.setPosition('penetrated');
+            target.value.setPosition('penetrating')
+            target.value.setTarget(this)
         },
         targetTypes: [
           {type: Arm, arousalGain: 15},
@@ -194,6 +214,8 @@ export class Anus extends BodyPart {
         function: (target)=>{
             this.setTarget(target.value)
             this.setPosition('rubbing');
+            target.value.setPosition('rubbing')
+            target.value.setTarget(this)
         },
         targetTypes: [
           {type: Arm, arousalGain: 10},
@@ -205,6 +227,8 @@ export class Anus extends BodyPart {
         function: (target)=>{
             this.setTarget(target.value)
             this.setPosition('penetrated');
+            target.value.setPosition('penetrating')
+            target.value.setTarget(this)
         },
         targetTypes: [
           {type: Arm, arousalGain: 15},

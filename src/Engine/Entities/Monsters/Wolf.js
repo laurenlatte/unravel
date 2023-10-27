@@ -5,10 +5,10 @@ export default class Wolf extends Monster {
   constructor(id) {
     super(id, 'Wolf');
     this.bodyParts = {
-      leftPaw: new BodyParts.Arm('Left paw', 'relaxed'),
-      rightPaw: new BodyParts.Arm('Right paw', 'relaxed'),
-      penis: new BodyParts.Penis('Penis', 'relaxed'),
-      anus: new BodyParts.Anus('Anus', 'relaxed'),
+      leftPaw: new BodyParts.Arm('Left paw', 'relaxed', id),
+      rightPaw: new BodyParts.Arm('Right paw', 'relaxed', id),
+      penis: new BodyParts.Penis('Penis', 'relaxed', id),
+      anus: new BodyParts.Anus('Anus', 'relaxed', id),
     }
   }
 }

@@ -11,12 +11,15 @@ export default function Intercourse({game, setScene, prevScene}) {
     game.gameData.player.getArousal()
   );
 
+  const [actionLabels, setActionLabels] = useState([]);
+
   const [monsterArousal, setMonsterArousal] = useState(
     game.gameData.encounters.activeEncounters.monsters[0].getArousal()
   );
   const [monsterCame, setMonsterCame] = useState(
     false
   )
+  const [playerCame, setPlayerCame] = useState(false);
   const [isIntro, setIsIntro] = useState(true);
 
   var actionData = [];
@@ -57,6 +60,12 @@ export default function Intercourse({game, setScene, prevScene}) {
         if(game.gameData.encounters.activeEncounters.monsters[0].getArousal() >= 100) {
           setMonsterCame(true);
         }
+        if(game.gameData.player.getArousal() >= 100) {
+          setPlayerCame(true);
+        }
+        if(monsterCame && playerCame) {
+          game.gameData.player.setArousal(0);
+        }
       } catch {
         console.log("Ran into error updating intercourse scene")
       }
@@ -84,12 +93,18 @@ export default function Intercourse({game, setScene, prevScene}) {
         {monsterCame &&
           <TextStyles.LewdText>The {game.gameData.encounters.activeEncounters.monsters[0].name} covers you in its warm semen and scampers off into the forest.</TextStyles.LewdText>
         }
+        {playerCame &&
+          <TextStyles.LewdText>Fluid gushes out of your dripping pussy as your body convulses in rapture. You orgasm.</TextStyles.LewdText>
+        }
+        {!monsterCame && actionLabels.map((label)=>{
+          return <TextStyles.LewdText>{label}</TextStyles.LewdText>
+        })}
       </div>
       {isIntro &&
         <TextStyles.LewdText>A lewd warmth fills you as they approach</TextStyles.LewdText>
       }
         {monsterCame == false && actionData.map((data) => {
-          return <IntercourseAction actionData={data} game={game} setIsIntro={setIsIntro} />
+          return <IntercourseAction actionData={data} game={game} playerCame={playerCame} setPlayerCame={setPlayerCame} setIsIntro={setIsIntro} setActionLabels={setActionLabels} />
         })}
         {monsterCame &&
           <Actions setScene={setScene} buttonDefinitions={defaultActions} game={game} />

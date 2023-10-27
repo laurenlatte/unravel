@@ -3,27 +3,30 @@ import Select from 'react-select';
 import Action from './Action.js';
 import {useState} from 'react';
 
-export default function IntercourseAction({actionData, game, setIsIntro}) {
+export default function IntercourseAction({actionData, game, setIsIntro, setActionLabels, playerCame, setPlayerCame}) {
   const [targets, setTargets] = useState(actionData.targets);
   const [actions, setActions] = useState(actionData.actions);
-
-  console.log(actions);
 
   const [positionText, setPositionText] = useState(actionData.bodyPart.getPositionText());
 
   const targetList = []
   for(var targetItem in targets) {
     targetList.push({
-      value: targets[targetItem], label: targets[targetItem].name
+      value: targets[targetItem], label: targets[targetItem].name, key: targetItem,
     })
   }
   const [target, setTarget] = useState(targetList[0]);
-  console.log(targetList);
-  console.log(target);
 
   const doArousal = (arousalGain) => {
     game.arousePlayer(arousalGain);
     game.arouseMonster(0, arousalGain);
+  }
+
+  const doMonsterActions = () => {
+    for(var monsterId in game.gameData.encounters.activeEncounters.monsters) {
+      const monster = game.gameData.encounters.activeEncounters.monsters[monsterId]
+      monster.doMonsterAction(game.gameData.player, setActionLabels);
+    }
   }
 
   return (
@@ -52,7 +55,18 @@ export default function IntercourseAction({actionData, game, setIsIntro}) {
         }
         return isAvailable == true ? (
           <div style={{marginRight: '10px'}}>
-          <TextStyles.LinkText onClick={()=>{setIsIntro(false); data.function(target); setPositionText(actionData.bodyPart.getPositionText()); doArousal(arousalGain);}}>{data.name}</TextStyles.LinkText>
+          <TextStyles.LinkText onClick={()=>{
+            setIsIntro(false);
+            data.function(target);
+            if(playerCame) {
+              game.gameData.player.setArousal(0);
+              setPlayerCame(false);
+            }
+            game.gameData.encounters.activeEncounters.monsters[target.value.parentId].bodyParts[target.key].setIsOccupied(true);
+            doArousal(arousalGain);
+            doMonsterActions();
+            setPositionText(actionData.bodyPart.getPositionText());
+          }}>{data.name}</TextStyles.LinkText>
           </div>
         ) :
         null
