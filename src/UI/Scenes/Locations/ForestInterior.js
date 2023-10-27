@@ -11,7 +11,7 @@ export default function ForestInterior({game, setScene}) {
 
   const enterForest = () => {
     setForestLevel(forestLevel + 1);
-    if(forestLevel >= 5 && game.gameData.progression.stoneMine == false) {
+    if(forestLevel >= 5 && game.gameData.progression.stoneMine == false && game.gameData.player.getEnergy() > 0) {
       game.discoverStoneMine();
       addHeader({
         style: 'default',
@@ -42,7 +42,7 @@ export default function ForestInterior({game, setScene}) {
       },
       timeSpent:15,
       energySpent:15,
-      unlocked: true,
+      unlocked: showEnter,
       encounterChance: 0.2,
       location: 'forestInterior',
     },
@@ -58,7 +58,7 @@ export default function ForestInterior({game, setScene}) {
       },
       timeSpent:60,
       energySpent:30,
-      unlocked: true,
+      unlocked: showEnter,
       encounterChance: 0.05,
       location: 'forestInterior',
     },

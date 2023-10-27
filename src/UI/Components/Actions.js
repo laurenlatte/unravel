@@ -17,7 +17,6 @@ export default function Actions({buttonDefinitions, game, addHeader, setScene}) 
                     location={buttonDef.location}
                     setScene={setScene}
                   />
-                  <br />
                   </>
         }
     )}

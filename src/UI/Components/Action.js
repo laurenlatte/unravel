@@ -26,9 +26,5 @@ export default function Action({
     onClick();
   }
 
-  return (
-    <>
-    {unlocked && <TextStyles.LinkText onClick={()=>{handleClick();}}>{label}</TextStyles.LinkText>}
-    </>
-  )
+  return unlocked ? (<><TextStyles.LinkText onClick={()=>{handleClick();}}>{label}</TextStyles.LinkText><br /></>) : null
 }
