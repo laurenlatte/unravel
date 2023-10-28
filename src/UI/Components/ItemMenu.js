@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import * as TextStyles from './TextStyles';
 
-export default function ItemMenu({item, game}) {
+export default function ItemMenu({item, game, setItemAmount}) {
   const [amountToDrop, setAmountToDrop] = useState(0);
 
   const handleChange = (e) => {
@@ -10,6 +10,7 @@ export default function ItemMenu({item, game}) {
 
   const onDrop = () => {
     game.gameData.player.inventory.subtractFromItemByName(item.name, amountToDrop);
+    setItemAmount(item.amount);
   }
 
   return (
