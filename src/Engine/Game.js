@@ -19,7 +19,7 @@ const DEFAULT_GAME_DATA = {
     stone: numbers.createDecimal(0),
     copper: numbers.createDecimal(0),
   },
-  player: new Player(24, 100),
+  player: new Player(24, 200),
   home: {
     shelterLevel: 0,
     upgradeCost: {

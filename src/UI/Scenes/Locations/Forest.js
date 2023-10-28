@@ -3,6 +3,7 @@ import Scene from '../../Components/Scene.js';
 import {Wood} from '../../../Engine/Items/Item';
 
 export default function Forest({game, setScene}) {
+  const [showGatherWood, setShowGatherWood] = useState(true);
   const defaultHeaders = [
   ]
   const defaultActions = [
@@ -17,7 +18,7 @@ export default function Forest({game, setScene}) {
       label: 'Gather Wood',
       onClick: ()=>{
         game.gameData.player.inventory.addItem(new Wood(1));
-        addHeader({
+        setHeader({
           style: 'default',
           show: true,
           content: 'You labor in the forest to find one log of wood.'
@@ -25,7 +26,7 @@ export default function Forest({game, setScene}) {
       },
       timeSpent:60,
       energySpent:15,
-      unlocked: true,
+      unlocked: showGatherWood,
       encounterChance: 0.1,
       location: 'forest',
     },
@@ -42,17 +43,24 @@ export default function Forest({game, setScene}) {
     },
   ]
 
+  useEffect(()=>{
+    const updateInterval = setInterval(()=>{
+      setShowGatherWood(game.gameData.player.inventory.checkCanHoldWeight(new Wood(1)));
+      setActions(defaultActions);
+    })
+  })
+
   const [headers, setHeaders] = useState(defaultHeaders);
   const [actions, setActions] = useState(defaultActions);
-  const addHeader = (newHeader) => {
-    setHeaders([...headers, newHeader]);
+  const setHeader = (newHeader) => {
+    setHeaders([newHeader]);
   }
   return (
     <>
     <Scene
       descriptor={"You are in the dense forests near your home. Animals scurry about and the sound of birdsong fills the air."}
       game={game}
-      addHeader={addHeader}
+      addHeader={setHeader}
       headers={headers}
       actions={actions}
       setScene={setScene}

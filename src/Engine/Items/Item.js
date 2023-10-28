@@ -33,18 +33,18 @@ export class Item {
 
 export class Wood extends Item {
   constructor(amount) {
-    super('Wood', 5, true, amount, woodImg)
+    super('Wood', 1, true, amount, woodImg)
   }
 }
 
 export class Stone extends Item {
   constructor(amount) {
-    super('Stone', 15, true, amount, stoneImg)
+    super('Stone', 3, true, amount, stoneImg)
   }
 }
 
 export class Copper extends Item {
   constructor(amount) {
-    super('Copper', 25, true, amount, woodImg)
+    super('Copper', 15, true, amount, woodImg)
   }
 }
