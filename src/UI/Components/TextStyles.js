@@ -34,8 +34,20 @@ export function DescriptorText({children}) {
   )
 }
 
-export function LinkText({children, onClick}) {
+export function LinkText({children, onClick, overrideFontSize}) {
+  var style = {}
+  if(overrideFontSize) {
+    style = {...styleDefaults, color: 'blue', userSelect: 'none', fontSize: overrideFontSize}
+  } else {
+    style = {...styleDefaults, color: 'blue', userSelect: 'none'}
+  }
   return (
-    <a onClick={onClick}style={{...styleDefaults, color: 'blue', userSelect: 'none'}}>{children}</a>
+    <a onClick={onClick}style={style}>{children}</a>
+  )
+}
+
+export function TextButton({children, onClick, color, fontSize}) {
+  return (
+    <a onClick={onClick}style={{...styleDefaults, fontSize: fontSize, color: color, userSelect: 'none'}}>{children}</a>
   )
 }

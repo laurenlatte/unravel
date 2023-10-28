@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import {useState} from 'react';
 import Menu from './UI/Components/Menu.js';
+import InventoryMenu from './UI/Menus/InventoryMenu';
 import Home from './UI/Scenes/Locations/Home.js';
 import Forest from './UI/Scenes/Locations/Forest.js';
 import ForestInterior from './UI/Scenes/Locations/ForestInterior.js';
@@ -16,7 +17,7 @@ function App() {
   const game = new Game();
 
   const [scene, setScene] = useState({name: 'home', prevScene: 'home'});
-
+  const [invOpen, setInvOpen] = useState(false);
 
   const scenes = {
     'home': <Home game={game} setScene={setScene} prevScene={scene.prevScene}/>,
@@ -32,7 +33,8 @@ function App() {
   return (
     <div className="App">
       <div className="App-header">
-        <Menu game={game} setScene={setScene} scene={scene} />
+        <Menu game={game} setScene={setScene} scene={scene} setInvOpen={setInvOpen} />
+        {invOpen && <InventoryMenu game={game} setInvOpen={setInvOpen}/>}
         {scenes[scene.name]}
       </div>
     </div>

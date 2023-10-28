@@ -55,7 +55,7 @@ function StatDisplay({game, setScene, scene}) {
   )
 }
 
-export default function Menu({game, setScene, scene}) {
+export default function Menu({game, setScene, scene, setInvOpen, invOpen}) {
   return (
     <div style={{
       height: '100%',
@@ -70,6 +70,7 @@ export default function Menu({game, setScene, scene}) {
     }}>
       <hr style={{color:'white'}} />
       <StatDisplay game={game} scene={scene} setScene={setScene} />
+      <button onClick={()=>{setInvOpen(!invOpen)}}>Open Inventory</button>
     </div>
   )
 }
