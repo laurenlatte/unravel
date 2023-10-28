@@ -23,6 +23,7 @@ export default function InventoryMenu({game, setInvOpen}) {
     <div style={{zIndex: 2, width: '500px', height: '500px', backgroundColor: '#464c59'}}>
     <div style={{width: '100%', height: '20px', display: 'flex', alignItems: 'right', justifyContent: 'space-between'}}>
     <TextStyles.DefaultText>Inventory</TextStyles.DefaultText>
+    <TextStyles.DefaultText>{game.gameData.player.inventory.getHeldWeight()}lbs / {game.gameData.player.inventory.maxWeight}lbs</TextStyles.DefaultText>
     <TextStyles.TextButton fontSize='20px' color='white' onClick={()=>{setInvOpen(false)}}>X</TextStyles.TextButton>
     </div>
     <hr style={{color: 'white', marginBottom: '0px'}} />

@@ -7,11 +7,16 @@ export default class Inventory {
     this.contents = []
   }
 
-  checkCanHoldWeight(item) {
+  getHeldWeight() {
     var heldWeight = 0;
     for(var itemKey in this.contents) {
       heldWeight += this.contents[itemKey].getWeight();
     }
+    return heldWeight;
+  }
+
+  checkCanHoldWeight(item) {
+    var heldWeight = this.getHeldWeight();
     if(item.getWeight() + heldWeight > this.maxWeight) {
       return false;
     } else {
@@ -22,8 +27,10 @@ export default class Inventory {
   checkHasInvSpaces(item) {
     if(this.contents.length >= this.maxSize) {
       for(var itemKey in this.contents) {
-        if(item instanceof this.contents[itemKey] && item.isStackable) {
-          return true;
+        if(item.constructor === this.contents[itemKey].constructor) {
+          if(item.isStackable){
+            return true;
+          }
         }
       }
       return false;
@@ -33,26 +40,66 @@ export default class Inventory {
   }
 
   addItem(item) {
-    console.log("Adding item " + item.name)
     if(this.checkHasInvSpaces(item) && this.checkCanHoldWeight(item)) {
-      console.log("Passed inv check")
       if(this.contents.length > 0) {
+        var itemFound = false;
         for(var itemKey in this.contents) {
-          if(item instanceof this.contents[itemKey]) {
+          if(item.constructor === this.contents[itemKey].constructor) {
+            itemFound = true;
             if(item.isStackable) {
               this.contents[itemKey].addAmount(item.getAmount())
             } else {
               this.contents.push(item);
             }
-          } else {
-            this.contents.push(item);
           }
+        }
+        if(!itemFound) {
+          this.contents.push(item);
         }
       } else {
         this.contents.push(item);
       }
     }
-    console.log('New Inv Contents: ' + this.contents)
+  }
+
+  checkIsInInventory(itemType, amount) {
+    for(var itemKey in this.contents) {
+      if(this.contents[itemKey] instanceof itemType) {
+        if(this.contents[itemKey].getAmount() >= amount) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+    return false;
+  }
+
+  getItemIndex(itemType) {
+    for(var itemKey in this.contents) {
+      if(this.contents[itemKey] instanceof itemType) {
+        return itemKey;
+      }
+    }
+  }
+
+  subtractFromItem(itemType, amount) {
+    if(this.checkIsInInventory(itemType, amount)) {
+      const index = this.getItemIndex(itemType);
+      this.contents[index].subtractAmount(amount);
+      if(this.contents[index].amount <= 0) {
+        this.contents = this.contents.splice(1, index)
+      }
+    }
+  }
+
+  addToItem(itemType, amount) {
+    if(this.checkIsInInventory(itemType, 1)) {
+      const index = this.getItemIndex(itemType);
+      this.contents[index].addAmount(amount);
+    } else {
+      this.addItem(new itemType(amount))
+    }
   }
 
 }

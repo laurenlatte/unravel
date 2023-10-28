@@ -3,7 +3,7 @@ import Scene from '../../Components/Scene.js';
 
 export default function Home({game, setScene}) {
 
-  const [showShelterUpgrade, setShowShelterUpgrade] = useState(game.checkCanAffordShelter() && game.gameData.home.shelters[game.gameData.home.shelterLevel.add(1)] != null)
+  const [showShelterUpgrade, setShowShelterUpgrade] = useState(game.checkCanAffordShelter() && game.gameData.home.shelters[game.gameData.home.shelterLevel + 1] != null)
   const [shelterHeader, setShelterHeader] = useState(game.gameData.home.shelters[game.gameData.home.shelterLevel].description);
   const [showStoneQuarry, setShowStoneQuarry] = useState(game.gameData.progression.stoneMine);
 
@@ -67,7 +67,7 @@ export default function Home({game, setScene}) {
 
   useEffect(()=>{
     const updateInterval = setInterval(()=>{
-      setShowShelterUpgrade(game.checkCanAffordShelter() && game.gameData.home.shelters[game.gameData.home.shelterLevel.add(1)] != null);
+      setShowShelterUpgrade(game.checkCanAffordShelter() && game.gameData.home.shelters[game.gameData.home.shelterLevel + 1] != null);
       setShowStoneQuarry(game.gameData.progression.stoneMine)
       setShelterHeader(game.gameData.home.shelters[game.gameData.home.shelterLevel].description)
       setHeaders(defaultHeaders);

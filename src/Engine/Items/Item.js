@@ -1,4 +1,5 @@
 import woodImg from '../../UI/Images/wood.png';
+import stoneImg from '../../UI/Images/stone.png';
 
 export class Item {
   constructor(name, weight, isStackable, amount, image) {
@@ -33,5 +34,17 @@ export class Item {
 export class Wood extends Item {
   constructor(amount) {
     super('Wood', 5, true, amount, woodImg)
+  }
+}
+
+export class Stone extends Item {
+  constructor(amount) {
+    super('Stone', 15, true, amount, stoneImg)
+  }
+}
+
+export class Copper extends Item {
+  constructor(amount) {
+    super('Copper', 25, true, amount, woodImg)
   }
 }

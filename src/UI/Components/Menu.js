@@ -3,9 +3,6 @@ import {DefaultText} from './TextStyles.js';
 import Number from './Number.js'
 
 function StatDisplay({game, setScene, scene}) {
-  const [wood, setWood] = useState(game.gameData.resources.wood);
-  const [stone, setStone] = useState(game.gameData.resources.stone);
-  const [copper, setCopper] = useState(game.gameData.resources.copper);
   const [arousal, setArousal] = useState(game.gameData.player.getArousal());
   const [energy, setEnergy] = useState(game.gameData.player.getEnergy());
   const [minute, setMinute] = useState(game.gameData.time.minute);
@@ -13,9 +10,6 @@ function StatDisplay({game, setScene, scene}) {
   const [day, setDay] = useState(game.gameData.time.day);
   useEffect(()=>{
     const updateCheck = setInterval(()=>{
-      setWood(game.gameData.resources.wood);
-      setStone(game.gameData.resources.stone);
-      setCopper(game.gameData.resources.copper);
       setArousal(game.gameData.player.getArousal());
       setEnergy(game.gameData.player.getEnergy());
       setMinute(game.gameData.time.minute)
@@ -40,12 +34,6 @@ function StatDisplay({game, setScene, scene}) {
         <DefaultText>Day: {day}</DefaultText>
         <DefaultText>Time: {hour}:{minute == 0 ? "00" : minute}</DefaultText>
       </div>
-      <hr style={{color: 'white'}} />
-      <DefaultText>Resources</DefaultText>
-      <hr style={{color:'white'}} />
-      <DefaultText>Wood: <Number value={wood} /></DefaultText>
-      <DefaultText>Stone: <Number value={stone} /></DefaultText>
-      <DefaultText>Copper: <Number value={copper} /></DefaultText>
       <hr style={{color:'white'}} />
       <DefaultText> Attributes </DefaultText>
       <hr style={{color: 'white'}} />

@@ -2,6 +2,7 @@ import IncreMath from '../Utils/IncreMath.js';
 import Wolf from './Entities/Monsters/Wolf';
 import Bear from './Entities/Monsters/Bear';
 import Player from './Entities/Player.js';
+import {Wood, Stone, Copper} from './Items/Item';
 
 const numbers = new IncreMath();
 
@@ -20,7 +21,7 @@ const DEFAULT_GAME_DATA = {
   },
   player: new Player(24, 100),
   home: {
-    shelterLevel: numbers.createDecimal(0),
+    shelterLevel: 0,
     upgradeCost: {
       wood: 10,
       stone: 0,
@@ -32,33 +33,30 @@ const DEFAULT_GAME_DATA = {
         energyRestore: 50,
         maxEnergy: 100,
         encounterChance: 0.3,
-        upgradeCost: {
-          wood: 10,
-          stone: 0,
-          copper: 0,
-        },
+        upgradeCost: [
+          {item: Wood, amount: 10}
+        ]
       },
       1: {
         description: 'A ramshackle collection of sticks tied with twine roofs a small bedding of leaves on the ground.',
         energyRestore: 100,
         maxEnergy: 200,
         encounterChance: 0.1,
-        upgradeCost: {
-          wood: 20,
-          stone: 10,
-          copper: 0,
-        },
+        upgradeCost: [
+          {item: Wood, amount: 20},
+          {item: Stone, amount: 10},
+        ]
       },
       2: {
         description: 'A rugged log cabin stands proudly in the clearing.',
         energyRestore: 250,
         maxEnergy: 500,
         encounterChance: 0,
-        upgradeCost: {
-          wood: 100,
-          stone: 50,
-          copper: 10,
-        },
+        upgradeCost: [
+          {item: Wood, amount: 100},
+          {item: Stone, amount: 50},
+          {item: Copper, amount: 10}
+        ],
       }
     }
   },
@@ -87,45 +85,23 @@ export default class Game {
     this.gameData = gameData != null ? gameData : DEFAULT_GAME_DATA;
   }
 
-  addResource(resourceName, value) {
-    this.gameData.resources[resourceName] =
-    this.gameData.resources[resourceName].add(value)
-  }
-
-  subtractResource(resourceName, value) {
-    this.gameData.resources[resourceName] =
-    this.gameData.resources[resourceName].subtract(value)
-  }
-
   checkCanAffordShelter() {
-    const upgradeCost = this.gameData.home.shelters[this.gameData.home.shelterLevel].upgradeCost
-    if(
-      this.gameData.resources.wood.greaterThanOrEqualTo(upgradeCost.wood) &&
-      this.gameData.resources.stone.greaterThanOrEqualTo(upgradeCost.stone) &&
-      this.gameData.resources.copper.greaterThanOrEqualTo(upgradeCost.copper)
-    ) {
-      return true
-    } else {
-      return false
+    const upgradeCost = this.gameData.home.shelters[this.gameData.home.shelterLevel].upgradeCost;
+    var canUpgrade = true;
+    for(var costIndex in upgradeCost) {
+      if(this.gameData.player.inventory.checkIsInInventory(upgradeCost[costIndex].item, upgradeCost[costIndex].amount) == false) {
+        canUpgrade = false;
+      }
     }
+    return canUpgrade;
   }
 
   upgradeShelter() {
     const upgradeCost = this.gameData.home.shelters[this.gameData.home.shelterLevel].upgradeCost
-    this.gameData.home.shelterLevel =
-    this.gameData.home.shelterLevel.add(1);
-    this.gameData.resources.wood =
-    this.gameData.resources.wood.subtract(
-      upgradeCost.wood
-    )
-    this.gameData.resources.stone =
-    this.gameData.resources.stone.subtract(
-      upgradeCost.stone
-    )
-    this.gameData.resources.copper =
-    this.gameData.resources.copper.subtract(
-      upgradeCost.copper
-    )
+    this.gameData.home.shelterLevel += 1;
+    for(var costIndex in upgradeCost) {
+      this.gameData.player.inventory.subtractFromItem(upgradeCost[costIndex].item, upgradeCost[costIndex].amount)
+    }
   }
 
   addTime(minutes) {

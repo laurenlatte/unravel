@@ -16,7 +16,6 @@ export default function Forest({game, setScene}) {
     {
       label: 'Gather Wood',
       onClick: ()=>{
-        game.addResource('wood', 1);
         game.gameData.player.inventory.addItem(new Wood(1));
         addHeader({
           style: 'default',

@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import Scene from '../../Components/Scene.js';
+import {Stone} from '../../../Engine/Items/Item';
 
 export default function StoneQuarry({game, setScene}) {
   const defaultHeaders = [
@@ -15,7 +16,7 @@ export default function StoneQuarry({game, setScene}) {
     {
       label: 'Gather Loose Rocks',
       onClick: ()=>{
-        game.addResource('stone', 1);
+        game.gameData.player.inventory.addItem(new Stone(1));
         addHeader({
           style: 'default',
           show: true,
