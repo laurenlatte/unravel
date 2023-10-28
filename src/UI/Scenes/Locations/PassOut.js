@@ -3,8 +3,6 @@ import Scene from '../../Components/Scene.js';
 
 export default function PassOut({game, setScene}) {
 
-  const [shelterHeader, setShelterHeader] = useState(game.gameData.home.shelters[game.gameData.home.shelterLevel].description);
-
   const defaultActions = [
     {
       label: 'Wake up at home',

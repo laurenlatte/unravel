@@ -18,7 +18,7 @@ const DEFAULT_GAME_DATA = {
   player: new Player(24, 200),
   home: {
     shelterLevel: 0,
-    craftingLevel: 1,
+    craftingLevel: 0,
     shelters: {
       0: {
         description: 'A rugged bedding of leaves lays on the ground.',
@@ -86,7 +86,7 @@ const DEFAULT_GAME_DATA = {
     }
   },
   progression: {
-    stoneMine: true,
+    stoneMine: false,
     crafting: false,
   }
 };
