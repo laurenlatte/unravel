@@ -3,6 +3,7 @@ import Wolf from './Entities/Monsters/Wolf';
 import Bear from './Entities/Monsters/Bear';
 import Player from './Entities/Player.js';
 import {Wood, Stone, Copper} from './Items/Item';
+import * as Craftables from './Items/Craftables';
 
 const numbers = new IncreMath();
 
@@ -14,19 +15,10 @@ const DEFAULT_GAME_DATA = {
     hour: 12,
     minute: 0,
   },
-  resources: {
-    wood: numbers.createDecimal(0),
-    stone: numbers.createDecimal(0),
-    copper: numbers.createDecimal(0),
-  },
   player: new Player(24, 200),
   home: {
     shelterLevel: 0,
-    upgradeCost: {
-      wood: 10,
-      stone: 0,
-      copper: 0,
-    },
+    craftingLevel: 0,
     shelters: {
       0: {
         description: 'A rugged bedding of leaves lays on the ground.',
@@ -58,6 +50,25 @@ const DEFAULT_GAME_DATA = {
           {item: Copper, amount: 10}
         ],
       }
+    },
+    craftingBenches: {
+      0: {
+        description: "You have nowhere to craft items.",
+        unlockedCraftables: [],
+        upgradeCost: [
+          {item: Wood, amount: 20},
+          {item: Stone, amount: 10},
+        ]
+      },
+      1: {
+        description: "You have a rudimentary crafting bench.",
+        unlockedCraftables: [Craftables.StoneSpear],
+        upgradeCost: [
+          {item: Wood, amount: 100},
+          {item: Stone, amount: 50},
+          {item: Copper, amount: 10},
+        ]
+      }
     }
   },
   encounters: {
@@ -76,6 +87,7 @@ const DEFAULT_GAME_DATA = {
   },
   progression: {
     stoneMine: false,
+    crafting: false,
   }
 };
 
@@ -96,9 +108,28 @@ export default class Game {
     return canUpgrade;
   }
 
+  checkCanAffordCraftingBench() {
+    const upgradeCost = this.gameData.home.craftingBenches[this.gameData.home.craftingLevel].upgradeCost;
+    var canUpgrade = true;
+    for(var costIndex in upgradeCost) {
+      if(this.gameData.player.inventory.checkIsInInventory(upgradeCost[costIndex].item, upgradeCost[costIndex].amount) == false) {
+        canUpgrade = false;
+      }
+    }
+    return canUpgrade;
+  }
+
   upgradeShelter() {
     const upgradeCost = this.gameData.home.shelters[this.gameData.home.shelterLevel].upgradeCost
     this.gameData.home.shelterLevel += 1;
+    for(var costIndex in upgradeCost) {
+      this.gameData.player.inventory.subtractFromItem(upgradeCost[costIndex].item, upgradeCost[costIndex].amount)
+    }
+  }
+
+  upgradeCraftingBench() {
+    const upgradeCost = this.gameData.home.craftingBenches[this.gameData.home.craftingLevel].upgradeCost
+    this.gameData.home.craftingLevel += 1;
     for(var costIndex in upgradeCost) {
       this.gameData.player.inventory.subtractFromItem(upgradeCost[costIndex].item, upgradeCost[costIndex].amount)
     }
@@ -170,5 +201,7 @@ export default class Game {
   discoverStoneMine() {
     this.gameData.progression.stoneMine = true;
   }
+
+
 
 }
