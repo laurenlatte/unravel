@@ -39,8 +39,16 @@ export default class Inventory {
     }
   }
 
+  checkCanAddItem(item) {
+    if(this.checkCanHoldWeight(item) && this.checkHasInvSpaces(item)) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   addItem(item) {
-    if(this.checkHasInvSpaces(item) && this.checkCanHoldWeight(item)) {
+    if(this.checkCanAddItem(item)) {
       if(this.contents.length > 0) {
         var itemFound = false;
         for(var itemKey in this.contents) {

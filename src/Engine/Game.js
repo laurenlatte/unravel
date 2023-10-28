@@ -18,7 +18,7 @@ const DEFAULT_GAME_DATA = {
   player: new Player(24, 200),
   home: {
     shelterLevel: 0,
-    craftingLevel: 0,
+    craftingLevel: 1,
     shelters: {
       0: {
         description: 'A rugged bedding of leaves lays on the ground.',
@@ -86,7 +86,7 @@ const DEFAULT_GAME_DATA = {
     }
   },
   progression: {
-    stoneMine: false,
+    stoneMine: true,
     crafting: false,
   }
 };
@@ -132,6 +132,31 @@ export default class Game {
     this.gameData.home.craftingLevel += 1;
     for(var costIndex in upgradeCost) {
       this.gameData.player.inventory.subtractFromItem(upgradeCost[costIndex].item, upgradeCost[costIndex].amount)
+    }
+  }
+
+  getCraftables() {
+    return this.gameData.home.craftingBenches[this.gameData.home.craftingLevel].unlockedCraftables;
+  }
+
+  checkCanCraftItem(craftableItem) {
+    const recipe = craftableItem.getRecipe();
+    var canUpgrade = true;
+    for(var recipeIndex in recipe) {
+      if(this.gameData.player.inventory.checkIsInInventory(recipe[recipeIndex].item, recipe[recipeIndex].amount) == false) {
+        canUpgrade = false;
+      }
+    }
+    return canUpgrade;
+  }
+
+  craftItem(craftableItem) {
+    if(this.checkCanCraftItem(craftableItem) && this.gameData.player.inventory.checkCanAddItem(craftableItem)) {
+      const recipe = craftableItem.getRecipe();
+      for(var recipeIndex in recipe) {
+        this.gameData.player.inventory.subtractFromItem(recipe[recipeIndex].item, recipe[recipeIndex].amount)
+      }
+      this.gameData.player.inventory.addItem(craftableItem);
     }
   }
 

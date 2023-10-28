@@ -1,9 +1,8 @@
 import {useEffect, useState} from 'react';
 import Scene from '../../Components/Scene.js';
 
-export default function Home({game, setScene}) {
+export default function PassOut({game, setScene}) {
 
-  const [showShelterUpgrade, setShowShelterUpgrade] = useState(game.checkCanAffordShelter() && game.gameData.home.shelters[game.gameData.home.shelterLevel.add(1)] != null)
   const [shelterHeader, setShelterHeader] = useState(game.gameData.home.shelters[game.gameData.home.shelterLevel].description);
 
   const defaultActions = [
