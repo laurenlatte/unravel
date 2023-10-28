@@ -75,6 +75,19 @@ export default class Inventory {
     return false;
   }
 
+  checkIsInInventoryByName(itemName, amount) {
+    for(var itemKey in this.contents) {
+      if(this.contents[itemKey].name == itemName) {
+        if(this.contents[itemKey].getAmount() >= amount) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+    return false;
+  }
+
   getItemIndex(itemType) {
     for(var itemKey in this.contents) {
       if(this.contents[itemKey] instanceof itemType) {
@@ -83,9 +96,27 @@ export default class Inventory {
     }
   }
 
+  getItemIndexByName(itemName) {
+    for(var itemKey in this.contents) {
+      if(this.contents[itemKey].name == itemName) {
+        return itemKey;
+      }
+    }
+  }
+
   subtractFromItem(itemType, amount) {
     if(this.checkIsInInventory(itemType, amount)) {
       const index = this.getItemIndex(itemType);
+      this.contents[index].subtractAmount(amount);
+      if(this.contents[index].amount <= 0) {
+        this.contents = this.contents.splice(1, index)
+      }
+    }
+  }
+
+  subtractFromItemByName(itemName, amount) {
+    if(this.checkIsInInventoryByName(itemName, amount)) {
+      const index = this.getItemIndexByName(itemName);
       this.contents[index].subtractAmount(amount);
       if(this.contents[index].amount <= 0) {
         this.contents = this.contents.splice(1, index)

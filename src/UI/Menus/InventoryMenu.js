@@ -31,10 +31,10 @@ export default function InventoryMenu({game, setInvOpen}) {
       {items.map((item)=>{
         console.log("Mapping new item")
         console.log(item)
-        return <InventoryItem item={item} />
+        return <InventoryItem item={item} game={game} />
       })}
       {emptyBoxList.map((item)=>{
-        return <InventoryItem item={item} />
+        return <InventoryItem item={item} game={game} />
       })}
     </div>
     </div>
