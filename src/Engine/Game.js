@@ -8,6 +8,7 @@ import * as Craftables from './Items/Craftables';
 const numbers = new IncreMath();
 
 const DEFAULT_GAME_DATA = {
+  devMode: true,
   time: {
     day: 0,
     season: 0,
@@ -95,6 +96,11 @@ export default class Game {
 
   constructor(gameData) {
     this.gameData = gameData != null ? gameData : DEFAULT_GAME_DATA;
+    if(this.gameData.devMode == true) {
+      this.gameData.home.shelterLevel = 2;
+      this.gameData.home.craftingLevel = 1;
+      this.gameData.progression.stoneMine = true;
+    }
   }
 
   checkCanAffordShelter() {

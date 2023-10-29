@@ -3,6 +3,7 @@ import './App.css';
 import {useState} from 'react';
 import Menu from './UI/Components/Menu.js';
 import InventoryMenu from './UI/Menus/InventoryMenu';
+import EquipmentMenu from './UI/Menus/EquipmentMenu';
 import Home from './UI/Scenes/Locations/Home.js';
 import Forest from './UI/Scenes/Locations/Forest.js';
 import ForestInterior from './UI/Scenes/Locations/ForestInterior.js';
@@ -19,6 +20,7 @@ function App() {
 
   const [scene, setScene] = useState({name: 'home', prevScene: 'home'});
   const [invOpen, setInvOpen] = useState(false);
+  const [eqpOpen, setEqpOpen] = useState(false);
 
   const scenes = {
     'home': <Home game={game} setScene={setScene} prevScene={scene.prevScene}/>,
@@ -35,8 +37,9 @@ function App() {
   return (
     <div className="App">
       <div className="App-header">
-        <Menu game={game} setScene={setScene} scene={scene} setInvOpen={setInvOpen} />
+        <Menu game={game} setScene={setScene} scene={scene} setInvOpen={setInvOpen} setEqpOpen={setEqpOpen} invOpen={invOpen} eqpOpen={eqpOpen} />
         {invOpen && <InventoryMenu game={game} setInvOpen={setInvOpen}/>}
+        {eqpOpen && <EquipmentMenu game={game} setEqpOpen={setEqpOpen}/>}
         {scenes[scene.name]}
       </div>
     </div>
