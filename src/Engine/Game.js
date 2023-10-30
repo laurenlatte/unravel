@@ -8,7 +8,7 @@ import * as Craftables from './Items/Craftables';
 const numbers = new IncreMath();
 
 const DEFAULT_GAME_DATA = {
-  devMode: true,
+  devMode: false,
   time: {
     day: 0,
     season: 0,
