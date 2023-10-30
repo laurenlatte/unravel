@@ -6,11 +6,14 @@ import * as TextStyles from './TextStyles';
 export default function InventoryItem({item, game}) {
   const [showItemMenu, setShowItemMenu] = useState(false);
   const [itemAmount, setItemAmount] = useState(item.amount);
-
+  var color = 'white';
+  if(item.equipped && item.equipped == true) {
+    color = 'orange';
+  }
   return (
     <>
     <Tooltip id={item.name} />
-    <div onClick={()=>{if(item.name!=undefined){setShowItemMenu(!showItemMenu)}}}data-tooltip-id={item.name} data-tooltip-content={item.name} style={{position: 'relative', width: '50px', height: '50px', margin: '10px', backgroundColor: '#464c59', border: 'solid', borderColor: 'white', justifyContent: 'center'}}>
+    <div onClick={()=>{if(item.name!=undefined){setShowItemMenu(!showItemMenu)}}}data-tooltip-id={item.name} data-tooltip-content={item.name} style={{position: 'relative', width: '50px', height: '50px', margin: '10px', backgroundColor: '#464c59', border: 'solid', borderColor: color, justifyContent: 'center'}}>
       {item.isStackable &&
         <p style={{marginTop: '0px', position: 'absolute', top: '0px', left: '3px',color: 'white', fontSize: '10px'}}>x{itemAmount}</p>
       }

@@ -20,18 +20,18 @@ export default function EquipmentMenu({game, setEqpOpen}) {
     <div style={{zIndex: 2, width: '225px', height: '300px', backgroundColor: '#464c59'}}>
       <div style={{display: 'inline-block', border: 'solid'}}>
         <div style={{display: 'flex', justifyContent: 'center'}}>
-          <EquipmentSlot slot="head" item={headSlot} game={game} defaultImage={defaultHeadImage}/>
+          <EquipmentSlot slot="head" item={headSlot} setSlot={setHeadSlot} game={game} defaultImage={defaultHeadImage}/>
         </div>
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
-          <EquipmentSlot slot="leftHand" item={leftHandSlot} game={game} defaultImage={defaultLeftHandImage}/>
-          <EquipmentSlot slot="chest" item={chestSlot} game={game} defaultImage={defaultChestImage}/>
-          <EquipmentSlot slot="rightHand" item={rightHandSlot} game={game} defaultImage={defaultRightHandImage}/>
+          <EquipmentSlot slot="leftHand" item={leftHandSlot} setSlot={setLeftHandSlot} game={game} defaultImage={defaultLeftHandImage}/>
+          <EquipmentSlot slot="chest" item={chestSlot} setSlot={setChestSlot} game={game} defaultImage={defaultChestImage}/>
+          <EquipmentSlot slot="rightHand" item={rightHandSlot} setSlot={setRightHandSlot} game={game} defaultImage={defaultRightHandImage}/>
         </div>
         <div style={{display: 'flex', justifyContent: 'center'}}>
-          <EquipmentSlot slot="legs" item={legsSlot} game={game} defaultImage={defaultLegsImage}/>
+          <EquipmentSlot slot="legs" item={legsSlot} game={game} setSlot={setLegsSlot} defaultImage={defaultLegsImage}/>
         </div>
         <div style={{display: 'flex', justifyContent: 'center'}}>
-          <EquipmentSlot slot="boots" item={bootsSlot} game={game} defaultImage={defaultBootsImage}/>
+          <EquipmentSlot slot="boots" item={bootsSlot} game={game} setSlot={setBootsSlot} defaultImage={defaultBootsImage}/>
         </div>
       </div>
     </div>

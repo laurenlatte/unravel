@@ -17,6 +17,7 @@ export class Equipment extends Craftable {
   constructor(name, weight, isStackable, amount, image, armourBonus, attackBonus, equipmentLevel, slot) {
     super(name, weight, isStackable, amount, image);
     this.equippable = true;
+    this.equipped = false;
     this.equipmentLevel = equipmentLevel
     this.armourBonus = armourBonus
     this.attackBonus = attackBonus
